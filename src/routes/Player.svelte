@@ -13,7 +13,7 @@
 
 	export let accessToken = '';
 	export let playerState = { is_playing: false };
-    
+
 	let volume = 50;
 
 	async function pausePlay() {
@@ -65,7 +65,7 @@
 	}
 </script>
 
-<div class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between">
+<div class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between overflow-x-auto">
 	<div class="flex space-x-2">
 		<div class="flex items-center space-x-2 mr-4">
 			<button class=" font-bold py-2 px-4 rounded transition duration-300" on:click={skipPrevious}>
@@ -94,7 +94,7 @@
 			/>
 		</div>
 	</div>
-	<div>
+	<div class="ml-8">
 		<button
 			class="bg-black text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-300 ml-auto block"
 			on:click={logout}
