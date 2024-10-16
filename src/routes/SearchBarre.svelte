@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Logout from './User.svelte';
+  import User from './User.svelte';
 
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
@@ -94,7 +94,7 @@
 		</div>
 
 		<div class="ml-2">
-			<Logout />
+			<User {accessToken} />
 		</div>
 	</div>
 	{#if searchResults.length > 0}

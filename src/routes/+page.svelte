@@ -9,24 +9,60 @@
 	import { onMount } from 'svelte';
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { faPlay, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 	let playlists: string | any[] = [];
-	let accessToken = '';
+	let accessToken: string | undefined | null = undefined;
 
 	onMount(async () => {
 		const cookies = Cookies();
 		accessToken = cookies.get('spotify_access_token');
+		let refreshToken = cookies.get('spotify_refresh_token');
 
-		if (accessToken) {
-			const response = await fetch('/api/playlists', {
-				headers: {
-					Authorization: `Bearer ${accessToken}`
-				}
-			});
-			playlists = await response.json();
+		if (!refreshToken && !accessToken) {
+			accessToken = null;
+			return;
+		} else if (refreshToken && !accessToken) {
+			await refreshAccessToken();
+			if (!accessToken) {
+				accessToken = null;
+				refreshToken = null;
+				return;
+			}
 		}
+
+		const response = await fetch('/api/playlists', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		});
+		playlists = await response.json();
 	});
+
+	async function refreshAccessToken() {
+		const cookies = Cookies();
+		const refreshToken = cookies.get('spotify_refresh_token');
+
+		if (refreshToken) {
+			const response = await fetch('/api/refresh_token', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					refresh_token: refreshToken
+				})
+			});
+			const data = await response.json();
+			if (data.access_token) {
+				cookies.set('spotify_access_token', data.access_token, { path: '/' });
+				accessToken = data.access_token;
+			}
+			if (data.refresh_token) {
+				cookies.set('spotify_refresh_token', data.refresh_token, { path: '/' });
+			}
+		}
+	}
 
 	async function playPlaylist(playlistUri: any) {
 		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
@@ -51,10 +87,13 @@
 			})
 		});
 	}
-
 </script>
 
-{#if !accessToken}
+{#if accessToken === undefined}
+	<div class="flex items-center justify-center h-screen">
+		<span class="text-3xl">Loading...</span>
+	</div>
+{:else if accessToken === null}
 	<Login />
 {:else}
 	<div class="mb-24">

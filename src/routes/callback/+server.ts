@@ -20,8 +20,11 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
       },
     });
 
-    const { access_token } = response.data;
-    cookies.set('spotify_access_token', access_token, { path: '/', httpOnly: false });
+    const { access_token, refresh_token, expires_in } = response.data;
+    const maxAge = expires_in; // expires_in is typically in seconds
+
+    cookies.set('spotify_access_token', access_token, { path: '/', httpOnly: false, maxAge });
+    cookies.set('spotify_refresh_token', refresh_token, { path: '/', httpOnly: false, maxAge: 30 * 24 * 60 * 60 }); // 30 days
 
     return new Response(null, {
       status: 302,
@@ -29,7 +32,6 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
         Location: '/'
       }
     });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return new Response('Error authenticating with Spotify', { status: 500 });
   }
