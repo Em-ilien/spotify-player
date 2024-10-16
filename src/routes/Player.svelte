@@ -17,14 +17,13 @@
 	let volume = 50;
 
 	async function pausePlay() {
-		const method = playerState.is_playing ? 'PUT' : 'POST';
 		const endpoint = playerState.is_playing ? 'pause' : 'play';
 
 		await fetch(`https://api.spotify.com/v1/me/player/${endpoint}`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`
 			},
-			method: method
+			method: 'PUT'
 		});
 
 		playerState.is_playing = !playerState.is_playing;
