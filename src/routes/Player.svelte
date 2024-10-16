@@ -105,11 +105,6 @@
 		});
 	}
 
-	function logout() {
-		const cookies = Cookies();
-		cookies.remove('spotify_access_token', { path: '/' });
-		window.location.href = '/';
-	}
 </script>
 
 <svelte:body
@@ -153,11 +148,6 @@
 		</div>
 	</div>
 	<div class="ml-8">
-		<button
-			class="bg-black text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-300 ml-auto block"
-			on:click={logout}
-		>
-			<FontAwesomeIcon icon={faSignOutAlt} />
-		</button>
+		
 	</div>
 </div>

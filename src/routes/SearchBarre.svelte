@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Logout from './User.svelte';
+
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -89,6 +91,10 @@
 					}
 				}}
 			/>
+		</div>
+
+		<div class="ml-2">
+			<Logout />
 		</div>
 	</div>
 	{#if searchResults.length > 0}
