@@ -65,7 +65,18 @@
 	}
 </script>
 
-<div class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between overflow-x-auto">
+<svelte:body
+	on:keydown={(event) => {
+		if (event.code === 'Space') {
+			event.preventDefault();
+			pausePlay();
+		}
+	}}
+/>
+
+<div
+	class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between overflow-x-auto"
+>
 	<div class="flex space-x-2">
 		<div class="flex items-center space-x-2 mr-4">
 			<button class=" font-bold py-2 px-4 rounded transition duration-300" on:click={skipPrevious}>
