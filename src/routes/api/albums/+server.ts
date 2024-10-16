@@ -9,26 +9,26 @@ export const GET: RequestHandler = async ({ request }) => {
   }
 
   try {
-    interface SpotifyPlaylist {
+    interface SpotifyAlbum {
       id: string;
       name: string;
     }
 
-    let allPlaylists: SpotifyPlaylist[] = [];
-    let nextUrl: string | null = 'https://api.spotify.com/v1/me/playlists?offset=0&limit=50';
+    let allAlbums: SpotifyAlbum[] = [];
+    let nextUrl: string | null = 'https://api.spotify.com/v1/me/albums?offset=0&limit=50';
 
     while (nextUrl) {
-      const response: { data: { items: SpotifyPlaylist[]; next: string | null } } = await axios.get(nextUrl, {
+      const response: { data: { items: SpotifyAlbum[]; next: string | null } } = await axios.get(nextUrl, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
 
-      allPlaylists = allPlaylists.concat(response.data.items);
+      allAlbums = allAlbums.concat(response.data.items);
       nextUrl = response.data.next;
     }
 
-    return new Response(JSON.stringify(allPlaylists), {
+    return new Response(JSON.stringify(allAlbums), {
       status: 200,
       headers: {
         'Content-Type': 'application/json'
