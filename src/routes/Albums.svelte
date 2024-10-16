@@ -47,7 +47,7 @@
 			<li>
 				<button
 					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded"
-					on:click={() => playAlbum(album.id)}
+					on:click={() => playAlbum(album.album.id)}
 				>
 					<FontAwesomeIcon icon={faPlay} />
 					<span class="text-lg ml-2">{album.album.name}</span>

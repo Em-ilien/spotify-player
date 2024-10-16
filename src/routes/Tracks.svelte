@@ -27,14 +27,14 @@
 			alert('No active devices found. Please open Spotify on one of your devices.');
 			return;
 		}
-		fetch('https://api.spotify.com/v1/me/player/play', {
+		await fetch('https://api.spotify.com/v1/me/player/play', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/json'
 			},
 			method: 'PUT',
 			body: JSON.stringify({
-				context_uri: `spotify:track:${trackUri}`
+				uris: [trackUri]
 			})
 		});
 	}
@@ -47,7 +47,7 @@
 			<li>
 				<button
 					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded"
-					on:click={() => playTrack(track.id)}
+					on:click={() => playTrack(track.track.uri)}
 				>
 					<FontAwesomeIcon icon={faPlay} />
 					<span class="text-lg ml-2">{track.track.name}</span>
