@@ -50,12 +50,7 @@
 					on:click={() => playArtist(artist.id)}
 				>
 					<FontAwesomeIcon icon={faPlay} />
-					<span class="text-lg ml-2">{artist.artist.name}</span>
-					<span class="text-sm ml-2 text-gray-500">
-						{#each artist.artist.artists as artist, index}
-							{artist.name}{index < artist.artist.artists.length - 1 ? ', ' : ''}
-						{/each}
-					</span>
+					<span class="text-lg ml-2">{artist.name}</span>
 				</button>
 			</li>
 		{/each}
