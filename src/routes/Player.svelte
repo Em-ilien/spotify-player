@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Cookies from 'cookie-universal';
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import {
@@ -8,13 +7,24 @@
 		faPlay,
 		faForward,
 		faVolumeUp,
-		faSignOutAlt
 	} from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
 
 	export let accessToken = '';
-	export let playerState = { is_playing: false };
 
-	let volume = 50;
+	let playerState = { is_playing: false, device: {volume_percent: 50} };
+
+	
+	onMount(fetchCurrentPlayState);
+
+	async function fetchCurrentPlayState() {
+		const response = await fetch('https://api.spotify.com/v1/me/player', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		});
+		playerState = await response.json();
+	}
 
 	async function play() {
 		const response = await fetch('https://api.spotify.com/v1/me/player', {
@@ -95,9 +105,8 @@
 		});
 	}
 
-	async function setVolume(event: Event) {
-		const volume = (event.target as HTMLInputElement).value;
-		await fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${volume}`, {
+	async function setVolume() {
+		await fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${playerState.device.volume_percent}`, {
 			headers: {
 				Authorization: `Bearer ${accessToken}`
 			},
@@ -141,7 +150,7 @@
 				type="range"
 				min="0"
 				max="100"
-				value={volume}
+				bind:value={playerState.device.volume_percent}
 				on:input={setVolume}
 				class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
 			/>

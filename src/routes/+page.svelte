@@ -52,27 +52,13 @@
 		});
 	}
 
-	let playerState = { is_playing: false };
-
-	async function fetchCurrentPlayState() {
-		const response = await fetch('https://api.spotify.com/v1/me/player', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		});
-		playerState = await response.json();
-	}
-
-	onMount(fetchCurrentPlayState);
-
-	
 </script>
 
 {#if !accessToken}
 	<Login />
 {:else}
 	<div class="mb-24">
-		<SearchBarre {accessToken}  />
+		<SearchBarre {accessToken} />
 	</div>
 
 	<div class="p-6 mb-20 z-2">
@@ -95,5 +81,5 @@
 		{/if}
 	</div>
 
-	<Player {playerState} {accessToken} />
+	<Player {accessToken} />
 {/if}
