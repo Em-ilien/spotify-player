@@ -16,17 +16,65 @@
 
 	let volume = 50;
 
-	async function pausePlay() {
-		const endpoint = playerState.is_playing ? 'pause' : 'play';
+	async function play() {
+		const response = await fetch('https://api.spotify.com/v1/me/player', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		});
+		console.log(response);
 
-		await fetch(`https://api.spotify.com/v1/me/player/${endpoint}`, {
+		if (response.status === 204) {
+			const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				}
+			});
+			const devicesData = await devicesResponse.json();
+
+			if (devicesData.devices.length === 0) {
+				alert('No active devices found. Please open Spotify on one of your devices.');
+				return;
+			}
+
+			await fetch('https://api.spotify.com/v1/me/player', {
+				headers: {
+					Authorization: `Bearer ${accessToken}`
+				},
+				method: 'PUT',
+				body: JSON.stringify({
+					device_ids: [devicesData.devices[0].id],
+					play: true
+				})
+			});
+		}
+		await fetch('https://api.spotify.com/v1/me/player/play', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`
 			},
 			method: 'PUT'
 		});
 
-		playerState.is_playing = !playerState.is_playing;
+		playerState.is_playing = true;
+	}
+
+	async function pause() {
+		await fetch('https://api.spotify.com/v1/me/player/pause', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			},
+			method: 'PUT'
+		});
+
+		playerState.is_playing = false;
+	}
+
+	function pausePlay() {
+		if (playerState.is_playing) {
+			pause();
+		} else {
+			play();
+		}
 	}
 
 	async function skipNext() {
