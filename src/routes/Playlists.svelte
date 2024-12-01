@@ -7,7 +7,8 @@
 
 	import { onMount } from 'svelte';
 
-	let playlists: string | any[] = [];
+	let playlists: { id: number; name: string }[] = [];
+	$: notNullPlaylists = playlists?.filter((playlist) => playlist !== null);
 
 	onMount(() => {
 		playlistsStore.subscribe((value) => {
@@ -41,9 +42,9 @@
 </script>
 
 <h1 class="text-3xl font-bold mb-4">Playlists</h1>
-{#if playlists.length > 0}
+{#if notNullPlaylists.length > 0}
 	<ul>
-		{#each playlists as playlist}
+		{#each notNullPlaylists as playlist}
 			<li>
 				<button
 					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded
