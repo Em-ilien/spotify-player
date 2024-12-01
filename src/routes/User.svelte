@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Cookies from 'cookie-universal';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+	import { faSignOut, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 
 	export let accessToken = '';
@@ -47,10 +47,10 @@
 <div class="flex items-center relative">
 	<button on:click={toggleLogoutButton}>
 		{#if avatarUrl}
-			<img src={avatarUrl} alt="Spotify Avatar" class="w-10 h-10 rounded-full cursor-pointer" />
+			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
 		{:else}
 			<span
-				class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-10 h-10 flex items-center justify-center"
+				class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-9 h-9 flex items-center justify-center"
 			>
 				{userName.charAt(0).toUpperCase()}
 			</span>
@@ -69,8 +69,8 @@
 				on:click={logout}
 				class="flex items-center w-full hover:bg-gray-100 px-4 py-3 rounded-lg"
 			>
-				<FontAwesomeIcon icon={faSignOutAlt} />
-				<span class="ml-3">Logout</span>
+				<FontAwesomeIcon icon={faSignOut} class="text-gray-700 text-sm" />
+				<span class="ml-3 text-gray-700 text-sm">Logout</span>
 			</button>
 		</div>
 	{/if}

@@ -40,18 +40,17 @@
 	}
 </script>
 
-<h1 class="text-3xl font-bold mb-4">Tracks</h1>
 {#if tracks.length > 0}
 	<ul>
 		{#each tracks as track}
 			<li>
 				<button
-					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded"
+					class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline"
 					on:click={() => playTrack(track.track.uri)}
 				>
-					<FontAwesomeIcon icon={faPlay} />
-					<span class="text-lg ml-2">{track.track.name}</span>
-					<span class="text-sm ml-2 text-gray-500">
+					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
+					<span class="text-base text-gray-800 ml-3 mr-2">{track.track.name}</span>
+					<span class="text-xs text-gray-500">
 						{#each track.track.artists as artist, index}
 							{artist.name}{index < track.track.artists.length - 1 ? ', ' : ''}
 						{/each}

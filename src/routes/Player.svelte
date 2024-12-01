@@ -2,10 +2,10 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import {
 		faBackward,
-		faPause,
-		faPlay,
 		faForward,
-		faVolumeUp
+		faVolumeUp,
+		faPlayCircle,
+		faPauseCircle
 	} from '@fortawesome/free-solid-svg-icons';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -184,23 +184,23 @@
 	<div class="flex space-x-2">
 		<div class="flex items-center space-x-2 mr-4">
 			<button
-				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-500"
+				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
 				on:click={skipPrevious}
 			>
 				<FontAwesomeIcon icon={faBackward} />
 			</button>
 			<button
-				class="font-bold py-3 px-6 rounded transition duration-300 text-gray-500 text-2xl"
+				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
 				on:click={pausePlay}
 			>
 				{#if playerState.is_playing}
-					<FontAwesomeIcon icon={faPause} />
+					<FontAwesomeIcon icon={faPauseCircle} />
 				{:else}
-					<FontAwesomeIcon icon={faPlay} />
+					<FontAwesomeIcon icon={faPlayCircle} />
 				{/if}
 			</button>
 			<button
-				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-500"
+				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
 				on:click={skipNext}
 			>
 				<FontAwesomeIcon icon={faForward} />

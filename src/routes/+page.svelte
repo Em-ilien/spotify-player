@@ -16,7 +16,7 @@
 		{ active: true, name: 'Playlists', component: Playlists },
 		{ active: false, name: 'Albums', component: Albums },
 		{ active: false, name: 'Artists', component: Artists },
-		{ active: false, name: 'Tracks', component: Tracks },
+		{ active: false, name: 'Tracks', component: Tracks }
 	];
 
 	onMount(async () => {
@@ -70,20 +70,20 @@
 {:else if accessToken === null}
 	<Login />
 {:else}
-	<div class="mb-24">
-		<SearchBarre {accessToken} />
-	</div>
+	<SearchBarre {accessToken} />
 
-	<div class="p-6 mb-20 z-2">
+	<div class="p-6 pt-0 mb-20 z-2">
 		<div class="flex gap-4 mb-5">
 			{#each tabs as tab}
 				<button
-					class="px-4 py-2 cursor-pointer bg-transparent text-base {tab.active ? 'border-b-2' : ''}"
+					class="px-4 py-2 cursor-pointer bg-transparent text-sm border-b-2 border-transparent
+					{tab.active ? 'border-b-gray-400 text-black' : 'text-gray-500'}
+					hover:text-gray-950 hover:border-b-gray-400 hover:border-b-2"
 					on:click={() => {
 						tabs.forEach((t) => (t.active = false));
 						tab.active = true;
 					}}
-					>
+				>
 					{tab.name}
 				</button>
 			{/each}

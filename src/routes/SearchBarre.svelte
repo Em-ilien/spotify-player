@@ -1,6 +1,5 @@
 <script lang="ts">
-  import User from './User.svelte';
-
+	import User from './User.svelte';
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -61,30 +60,26 @@
 	}
 </script>
 
-<div class="p-6 fixed top-0 left-0 right-0 bg-white shadow-md z-1">
+<div class="p-6 border-b-gray-300">
 	<div class="flex items-center justify-between">
 		{#if searchQuery.length}
 			<button
 				class="flex items-center mx-3 transition-opacity duration-300 ease-in-out opacity-100"
 				in:scale={{ duration: 300 }}
 				out:scale={{ duration: 300 }}
-                on:click={stopSearch}
+				on:click={stopSearch}
 			>
-				<FontAwesomeIcon
-					icon={faTimes}
-					class="text-gray-500 cursor-pointer size-6"
-					
-				/>
+				<FontAwesomeIcon icon={faTimes} class="text-gray-400 cursor-pointer size-6" />
 			</button>
 		{/if}
 
 		<div class="flex items-center border rounded p-2 flex-grow">
-			<FontAwesomeIcon icon={faSearch} class="text-gray-500" />
+			<FontAwesomeIcon icon={faSearch} class="text-gray-300 text-sm" />
 			<input
 				type="text"
 				placeholder="Search for a track..."
 				bind:value={searchQuery}
-				class="outline-none w-full ml-2"
+				class="outline-none w-full ml-2 text-sm"
 				on:keydown|stopPropagation={(event) => {
 					if (event.key === 'Escape') {
 						stopSearch();
@@ -93,7 +88,7 @@
 			/>
 		</div>
 
-		<div class="ml-2">
+		<div class="ml-4">
 			<User {accessToken} />
 		</div>
 	</div>
@@ -102,12 +97,17 @@
 			{#each searchResults as track}
 				<li>
 					<button
-						class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded
+						class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline
 						"
 						on:click={() => playTrack(track.uri)}
 					>
-						<FontAwesomeIcon icon={faPlay} />
-						<span class="text-lg ml-2">{track.name} - {track.artists[0].name}</span>
+						<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
+						<span class="text-base text-gray-800 ml-3 mr-2">{track.name}</span>
+						<span class="text-xs text-gray-500">
+							{#each track.artists as artist, index}
+								{artist.name}{index < track.artists.length - 1 ? ', ' : ''}
+							{/each}
+						</span>
 					</button>
 				</li>
 			{/each}

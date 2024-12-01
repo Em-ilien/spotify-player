@@ -40,17 +40,16 @@
 	}
 </script>
 
-<h1 class="text-3xl font-bold mb-4">Artists</h1>
 {#if artists.length > 0}
 	<ul>
 		{#each artists as artist}
 			<li>
 				<button
-					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded"
+					class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline"
 					on:click={() => playArtist(artist.id)}
 				>
-					<FontAwesomeIcon icon={faPlay} />
-					<span class="text-lg ml-2">{artist.name}</span>
+					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
+					<span class="text-base text-gray-800 ml-3">{artist.name}</span>
 				</button>
 			</li>
 		{/each}

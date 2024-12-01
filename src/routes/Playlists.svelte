@@ -41,18 +41,17 @@
 	}
 </script>
 
-<h1 class="text-3xl font-bold mb-4">Playlists</h1>
 {#if notNullPlaylists.length > 0}
 	<ul>
 		{#each notNullPlaylists as playlist}
 			<li>
 				<button
-					class="px-4 py-1 cursor-pointer flex items-center hover:bg-slate-100 w-full rounded
+					class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline
 						"
 					on:click={() => playPlaylist(playlist.id)}
 				>
-					<FontAwesomeIcon icon={faPlay} />
-					<span class="text-lg ml-2">{playlist.name}</span>
+					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
+					<span class="text-base text-gray-800 ml-3">{playlist.name}</span>
 				</button>
 			</li>
 		{/each}
