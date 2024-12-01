@@ -1,15 +1,21 @@
 <script lang="ts">
+	import { run, stopPropagation } from 'svelte/legacy';
+
 	import User from './User.svelte';
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay, faSearch, faTimesSquare } from '@fortawesome/free-solid-svg-icons';
 	import { scale } from 'svelte/transition';
 
-	export let accessToken = '';
+	interface Props {
+		accessToken?: string;
+	}
+
+	let { accessToken = '' }: Props = $props();
 	// export let playerState = { is_playing: false };
 
-	let searchResults: any[] = [];
-	let searchQuery = '';
+	let searchResults: any[] = $state([]);
+	let searchQuery = $state('');
 
 	async function searchTracks() {
 		if (!searchQuery) return;
@@ -30,10 +36,10 @@
 		searchResults = [];
 	}
 
-	$: {
+	run(() => {
 		if (searchQuery.length) searchTracks();
 		else stopSearch();
-	}
+	});
 
 	async function playTrack(trackUri: string) {
 		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
@@ -67,7 +73,7 @@
 				class="flex items-center mr-3 transition-opacity duration-300 ease-in-out opacity-100"
 				in:scale={{ duration: 300 }}
 				out:scale={{ duration: 300 }}
-				on:click={stopSearch}
+				onclick={stopSearch}
 			>
 				<FontAwesomeIcon
 					icon={faTimesSquare}
@@ -83,11 +89,11 @@
 				placeholder="Search for a track..."
 				bind:value={searchQuery}
 				class="outline-none w-full ml-2 text-sm"
-				on:keydown|stopPropagation={(event) => {
+				onkeydown={stopPropagation((event) => {
 					if (event.key === 'Escape') {
 						stopSearch();
 					}
-				}}
+				})}
 			/>
 		</div>
 
@@ -101,7 +107,7 @@
 				<li>
 					<button
 						class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
-						on:click={() => playTrack(track.uri)}
+						onclick={() => playTrack(track.uri)}
 					>
 						<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
 						<div class="flex items-baseline justify-items-start flex-wrap gap-2 gap-y-1">

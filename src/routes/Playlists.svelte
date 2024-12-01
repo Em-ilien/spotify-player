@@ -3,12 +3,16 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { playlistsStore } from '$lib/stores/playlistsStore';
 
-	export let accessToken: string | undefined | null = undefined;
 
 	import { onMount } from 'svelte';
+	interface Props {
+		accessToken?: string | undefined | null;
+	}
 
-	let playlists: { id: number; name: string }[] = [];
-	$: notNullPlaylists = playlists?.filter((playlist) => playlist !== null);
+	let { accessToken = undefined }: Props = $props();
+
+	let playlists: { id: number; name: string }[] = $state([]);
+	let notNullPlaylists = $derived(playlists?.filter((playlist) => playlist !== null));
 
 	onMount(() => {
 		playlistsStore.subscribe((value) => {
@@ -47,7 +51,7 @@
 			<li>
 				<button
 					class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
-					on:click={() => playPlaylist(playlist.id)}
+					onclick={() => playPlaylist(playlist.id)}
 				>
 					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
 					<span class="text-base text-gray-800 text-left">{playlist.name}</span>

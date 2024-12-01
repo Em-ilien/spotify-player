@@ -3,11 +3,15 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { artistsStore } from '$lib/stores/artistsStore';
 
-	export let accessToken: string | undefined | null = undefined;
 
 	import { onMount } from 'svelte';
+	interface Props {
+		accessToken?: string | undefined | null;
+	}
 
-	let artists: string | any[] = [];
+	let { accessToken = undefined }: Props = $props();
+
+	let artists: string | any[] = $state([]);
 
 	onMount(() => {
 		artistsStore.subscribe((value) => {
@@ -46,7 +50,7 @@
 			<li>
 				<button
 					class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
-					on:click={() => playArtist(artist.id)}
+					onclick={() => playArtist(artist.id)}
 				>
 					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
 					<span class="text-base text-gray-800 text-left">{artist.name}</span>

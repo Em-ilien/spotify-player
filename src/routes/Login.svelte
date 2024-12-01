@@ -6,7 +6,7 @@
 <div class="flex flex-col justify-center items-center h-screen">
 	<button
 		class="bg-black text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-300"
-		on:click={() => (window.location.href = '/login')}
+		onclick={() => (window.location.href = '/login')}
 	>
 		<FontAwesomeIcon icon={faSignInAlt} class="mr-2" /> <span>Login</span>
 	</button>

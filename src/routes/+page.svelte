@@ -10,14 +10,14 @@
 	import Tracks from './Tracks.svelte';
 	import Artists from './Artists.svelte';
 
-	let accessToken: string | undefined | null = undefined;
+	let accessToken: string | undefined | null = $state(undefined);
 
-	const tabs = [
+	const tabs = $state([
 		{ active: true, name: 'Playlists', component: Playlists },
 		{ active: false, name: 'Albums', component: Albums },
 		{ active: false, name: 'Artists', component: Artists },
 		{ active: false, name: 'Tracks', component: Tracks }
-	];
+	]);
 
 	onMount(async () => {
 		const cookies = Cookies();
@@ -77,7 +77,7 @@
 			{#each tabs as tab}
 				<button
 					class="px-4 cursor-pointer bg-transparent text-sm group"
-					on:click={() => {
+					onclick={() => {
 						tabs.forEach((t) => (t.active = false));
 						tab.active = true;
 					}}
@@ -97,7 +97,7 @@
 
 		{#each tabs as tab}
 			{#if tab.active}
-				<svelte:component this={tab.component} {accessToken} />
+				<tab.component {accessToken} />
 			{/if}
 		{/each}
 	</div>

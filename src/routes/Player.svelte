@@ -9,9 +9,13 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import { onMount, onDestroy } from 'svelte';
 
-	export let accessToken = '';
+	interface Props {
+		accessToken?: string;
+	}
 
-	let playerState = {
+	let { accessToken = '' }: Props = $props();
+
+	let playerState = $state({
 		is_playing: false,
 		device: { volume_percent: 50 },
 		item: {
@@ -20,11 +24,11 @@
 			duration_ms: 0
 		},
 		progress_ms: 0
-	};
+	});
 
 	let interval: number | undefined;
 
-	$: trackDurationRatioPercent = (playerState.progress_ms / playerState.item.duration_ms) * 100;
+	let trackDurationRatioPercent = $derived((playerState.progress_ms / playerState.item.duration_ms) * 100);
 
 	onMount(() => {
 		startTrackingCurrentPlayState();
@@ -156,7 +160,7 @@
 </script>
 
 <svelte:body
-	on:keydown={(event) => {
+	onkeydown={(event) => {
 		if (event.code === 'Space') {
 			event.preventDefault();
 			pausePlay();
@@ -183,13 +187,13 @@
 		<div class="flex items-center space-x-2 mr-4">
 			<button
 				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				on:click={skipPrevious}
+				onclick={skipPrevious}
 			>
 				<FontAwesomeIcon icon={faBackward} />
 			</button>
 			<button
 				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
-				on:click={pausePlay}
+				onclick={pausePlay}
 			>
 				{#if playerState.is_playing}
 					<FontAwesomeIcon icon={faPauseCircle} />
@@ -199,7 +203,7 @@
 			</button>
 			<button
 				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				on:click={skipNext}
+				onclick={skipNext}
 			>
 				<FontAwesomeIcon icon={faForward} />
 			</button>
@@ -231,7 +235,7 @@
 			min="0"
 			max="100"
 			bind:value={playerState.device.volume_percent}
-			on:input={setVolume}
+			oninput={setVolume}
 			class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
 			style="background: linear-gradient(to right, #4caf50 {playerState.device
 				.volume_percent}%, #d3d3d3 {playerState.device.volume_percent}%, #d3d3d3 100%);"

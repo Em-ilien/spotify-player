@@ -4,12 +4,16 @@
 	import { faSignOut, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 
-	export let accessToken = '';
+	interface Props {
+		accessToken?: string;
+	}
 
-	let avatarUrl = '';
-	let userName = '';
-	let userEmailAddress = '';
-	let showUserMenu = false;
+	let { accessToken = '' }: Props = $props();
+
+	let avatarUrl = $state('');
+	let userName = $state('');
+	let userEmailAddress = $state('');
+	let showUserMenu = $state(false);
 
 	onMount(async () => {
 		const response = await fetch('https://api.spotify.com/v1/me', {
@@ -42,10 +46,10 @@
 	}
 </script>
 
-<svelte:window on:click={handleClickOutside} />
+<svelte:window onclick={handleClickOutside} />
 
 <div class="flex items-center relative">
-	<button on:click={toggleLogoutButton}>
+	<button onclick={toggleLogoutButton}>
 		{#if avatarUrl}
 			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
 		{:else}
@@ -66,7 +70,7 @@
 			</div>
 
 			<button
-				on:click={logout}
+				onclick={logout}
 				class="flex items-center w-full hover:bg-gray-100 px-4 py-3 rounded-lg"
 			>
 				<FontAwesomeIcon icon={faSignOut} class="text-gray-700 text-sm" />
