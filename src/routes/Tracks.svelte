@@ -45,16 +45,18 @@
 		{#each tracks as track}
 			<li>
 				<button
-					class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline"
+					class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
 					on:click={() => playTrack(track.track.uri)}
 				>
-					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
-					<span class="text-base text-gray-800 ml-3 mr-2">{track.track.name}</span>
-					<span class="text-xs text-gray-500">
-						{#each track.track.artists as artist, index}
-							{artist.name}{index < track.track.artists.length - 1 ? ', ' : ''}
-						{/each}
-					</span>
+					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
+					<div class="flex items-baseline justify-items-start flex-wrap gap-2 gap-y-1">
+						<span class="text-base text-gray-800 text-left">{track.track.name}</span>
+						<span class="text-xs text-gray-500 text-left">
+							{#each track.track.artists as artist, index}
+								{artist.name}{index < track.track.artists.length - 1 ? ', ' : ''}
+							{/each}
+						</span>
+					</div>
 				</button>
 			</li>
 		{/each}

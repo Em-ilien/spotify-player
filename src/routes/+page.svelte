@@ -72,19 +72,25 @@
 {:else}
 	<SearchBarre {accessToken} />
 
-	<div class="p-6 pt-0 mb-20 z-2">
-		<div class="flex gap-4 mb-5">
+	<div class="mb-20 z-2">
+		<div class="pt-2 pb-3 flex mx-2">
 			{#each tabs as tab}
 				<button
-					class="px-4 py-2 cursor-pointer bg-transparent text-sm border-b-2 border-transparent
-					{tab.active ? 'border-b-gray-400 text-black' : 'text-gray-500'}
-					hover:text-gray-950 hover:border-b-gray-400 hover:border-b-2"
+					class="px-4 cursor-pointer bg-transparent text-sm group"
 					on:click={() => {
 						tabs.forEach((t) => (t.active = false));
 						tab.active = true;
 					}}
 				>
-					{tab.name}
+					<div
+						class=" py-2 border-b-2 border-transparent
+						{tab.active
+							? 'border-b-gray-400 text-black'
+							: 'group-hover:text-gray-700 group-hover:border-b-gray-200 group-hover:border-b-2 text-gray-500'}
+						"
+					>
+						<span>{tab.name}</span>
+					</div>
 				</button>
 			{/each}
 		</div>

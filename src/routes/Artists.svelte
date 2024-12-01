@@ -45,11 +45,11 @@
 		{#each artists as artist}
 			<li>
 				<button
-					class="px-4 py-1 cursor-pointer hover:bg-slate-100 w-full rounded flex items-baseline"
+					class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
 					on:click={() => playArtist(artist.id)}
 				>
-					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs" />
-					<span class="text-base text-gray-800 ml-3">{artist.name}</span>
+					<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
+					<span class="text-base text-gray-800 text-left">{artist.name}</span>
 				</button>
 			</li>
 		{/each}
