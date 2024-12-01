@@ -93,7 +93,7 @@
 		</div>
 	</div>
 	{#if searchResults.length > 0}
-		<ul class="mt-2">
+		<ul class="mt-2 pb-6 border-b-gray-500 border-b-2">
 			{#each searchResults as track}
 				<li>
 					<button
