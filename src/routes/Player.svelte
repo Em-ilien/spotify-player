@@ -35,8 +35,6 @@
 		setTimeout(async () => {
 			await fetchCurrentPlayState();
 			interval = setInterval(async () => {
-				console.log(playerState.item.name);
-
 				if (playerState.is_playing) {
 					playerState.progress_ms += 1000;
 					if (playerState.progress_ms >= playerState.item.duration_ms) {
