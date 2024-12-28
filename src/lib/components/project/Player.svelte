@@ -21,8 +21,18 @@
 	let playingTrack = $derived(playerState?.state?.track_window?.current_track);
 	let playingTitle = $derived(playingTrack.name);
 	let playingArtists = $derived(playingTrack.artists.map((a) => a.name));
-	let progress_ms = $derived(playerState.state?.position);
 	let duration_ms = $derived(playingTrack.duration_ms);
+
+	let progress_ms = $state(playerState.state?.position);
+
+	$effect(() => {
+		progress_ms = playerState.state?.position;
+	});
+	setInterval(() => {
+		if (isPaused) return;
+		if (progress_ms >= duration_ms) progress_ms = 0;
+		else progress_ms += 300;
+	}, 300);
 
 	let trackDurationRatioPercent = $derived((progress_ms / duration_ms) * 100);
 
@@ -100,6 +110,11 @@
 		</div>
 		{#if playingTrack}
 			<div class="flex items-center space-x-2">
+				<span class="text-gray-500"
+					>{Math.floor(progress_ms / 60000)}:{Math.floor((progress_ms % 60000) / 1000)
+						.toString()
+						.padStart(2, '0')}</span
+				>
 				<input
 					type="range"
 					min="0"
