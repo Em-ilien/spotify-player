@@ -34,6 +34,11 @@
 		else progress_ms += 300;
 	}, 300);
 
+	function changeProgress(event: Event) {
+		const target = event.target as HTMLInputElement;
+		playerState.seek(target.value);
+	}
+
 	let trackDurationRatioPercent = $derived((progress_ms / duration_ms) * 100);
 
 	let volume_percent = $state(50);
@@ -120,6 +125,7 @@
 					min="0"
 					max={duration_ms}
 					value={progress_ms}
+					oninput={changeProgress}
 					class="w-64 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
 					style="background: linear-gradient(to right, #4caf50 {trackDurationRatioPercent}%, #d3d3d3 {trackDurationRatioPercent}%, #d3d3d3 100%);"
 				/>

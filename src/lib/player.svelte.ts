@@ -19,6 +19,9 @@ export const playerState = $state({
 	},
 	setVolume: async (volume_rate: number) => {
 		await player.setVolume(volume_rate);
+	},
+	seek: async (position_ms: number) => {
+		await player.seek(position_ms);
 	}
 });
 
