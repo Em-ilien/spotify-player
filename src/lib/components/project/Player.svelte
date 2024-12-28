@@ -26,10 +26,6 @@
 	function setVolume() {
 		playerState.setVolume(volume_percent * 0.01);
 	}
-
-	function pausePlay() {
-		playerState.pausePlay(accessToken);
-	}
 </script>
 
 <svelte:body
@@ -64,7 +60,7 @@
 			</button>
 			<button
 				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
-				onclick={pausePlay}
+				onclick={playerState.pausePlay}
 			>
 				{#if playing}
 					<FontAwesomeIcon icon={faPauseCircle} />

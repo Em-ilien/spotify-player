@@ -11,21 +11,7 @@ export const playerState = $state({
 
 		changePlayer();
 	},
-	pausePlay: async (accessToken) => {
-		player.activateElement();
-
-		// fetch('https://api.spotify.com/v1/me/player', {
-		// 	headers: {
-		// 		Authorization: `Bearer ${accessToken}`,
-		// 		'Content-Type': 'application/json'
-		// 	},
-		// 	method: 'PUT',
-		// 	body: JSON.stringify({
-		// 		device_ids: [player._options.id],
-		// 		play: true
-		// 	})
-		// });
-
+	pausePlay: async () => {
 		await player.togglePlay();
 	},
 
