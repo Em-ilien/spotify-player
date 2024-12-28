@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { run, stopPropagation } from 'svelte/legacy';
 
-	import User from './User.svelte';
-
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay, faSearch, faTimesSquare } from '@fortawesome/free-solid-svg-icons';
 	import { scale } from 'svelte/transition';
+
+	import User from './User.svelte';
 
 	interface Props {
 		accessToken?: string;
