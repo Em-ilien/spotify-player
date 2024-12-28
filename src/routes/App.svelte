@@ -70,4 +70,4 @@
 	{/each}
 </div>
 
-<Player bind:accessToken />
+<Player />

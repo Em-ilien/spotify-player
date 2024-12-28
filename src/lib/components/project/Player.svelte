@@ -9,10 +9,11 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import { playerState } from '$lib/player.svelte';
 
-	let { accessToken = $bindable() } = $props();
+	$inspect(playerState, 'playerState');
 
 	let playing = $derived(playerState.state?.paused ?? false);
 	$inspect(playing, 'playing');
+	$inspect(playerState, 'playerState');
 	let playingTitle = $derived(playerState.state?.track_window.current_track.name);
 	let playingArtists = $derived(
 		playerState.state?.track_window.current_track.artists.map((a) => a.name)
