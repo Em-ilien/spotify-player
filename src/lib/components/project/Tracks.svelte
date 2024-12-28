@@ -3,8 +3,8 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { tracksStore } from '$lib/stores/tracksStore';
 
-
 	import { onMount } from 'svelte';
+	import { playerState } from '$lib/player.svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
 	}
@@ -20,17 +20,6 @@
 	});
 
 	async function playTrack(trackUri: any) {
-		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		});
-		const devices = await devicesResponse.json();
-
-		if (devices.devices.length === 0) {
-			alert('No active devices found. Please open Spotify on one of your devices.');
-			return;
-		}
 		await fetch('https://api.spotify.com/v1/me/player/play', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
@@ -38,7 +27,9 @@
 			},
 			method: 'PUT',
 			body: JSON.stringify({
-				uris: [trackUri]
+				uris: [trackUri],
+				device_id: playerState.deviceId,
+				play: true
 			})
 		});
 	}

@@ -9,7 +9,8 @@ export const GET: RequestHandler = () => {
     'user-modify-playback-state',
     'playlist-read-collaborative',
     'user-read-email',
-    'user-follow-read'
+    'user-follow-read',
+    'streaming',
   ].join(' ');
   
   const redirect_uri = encodeURIComponent(SPOTIFY_REDIRECT_URI);

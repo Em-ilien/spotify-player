@@ -7,57 +7,28 @@
 		faPlayCircle,
 		faPauseCircle
 	} from '@fortawesome/free-solid-svg-icons';
+	import { playerState } from '$lib/player.svelte';
 
-	interface Props {
-		accessToken?: string;
-	}
+	let { accessToken = $bindable() } = $props();
 
-	let { accessToken = '', player = $bindable() }: Props = $props();
-	$inspect(player, 'player');
-
-	let state: any = $state(undefined);
-	$inspect(state, 'state');
-
-	$effect(() => {
-		if (!player) {
-			return;
-		}
-
-		console.log('Player22:', player);
-
-		player.addListener('player_state_changed', (s) => {
-			console.log('Player state changed:', s);
-			if (!s) {
-				return;
-			}
-			state = s;
-		});
-	});
-
-	let playing = $derived(state?.paused ?? false);
+	let playing = $derived(playerState.state?.paused ?? false);
 	$inspect(playing, 'playing');
-	let playingTitle = $derived(state?.track_window.current_track.name);
-	let playingArtists = $derived(state?.track_window.current_track.artists.map((a) => a.name));
-	let progress_ms = $derived(state?.position);
-	let duration_ms = $derived(state?.track_window.current_track.duration_ms);
+	let playingTitle = $derived(playerState.state?.track_window.current_track.name);
+	let playingArtists = $derived(
+		playerState.state?.track_window.current_track.artists.map((a) => a.name)
+	);
+	let progress_ms = $derived(playerState.state?.position);
+	let duration_ms = $derived(playerState.state?.track_window.current_track.duration_ms);
 
 	let trackDurationRatioPercent = $derived((progress_ms / duration_ms) * 100);
 
-	async function pausePlay() {
-		await player.togglePlay();
+	let volume_percent = $state(50);
+	function setVolume() {
+		playerState.setVolume(volume_percent * 0.01);
 	}
 
-	async function skipNext() {
-		await player.nextTrack();
-	}
-
-	async function skipPrevious() {
-		await player.previousTrack();
-	}
-
-	let volume_percent = 50;
-	async function setVolume() {
-		await player.setVolume(volume_percent);
+	function pausePlay() {
+		playerState.pausePlay(accessToken);
 	}
 </script>
 
@@ -65,7 +36,7 @@
 	onkeydown={(event) => {
 		if (event.code === 'Space') {
 			event.preventDefault();
-			pausePlay();
+			playerState.pausePlay();
 		}
 	}}
 />
@@ -87,7 +58,7 @@
 		<div class="flex items-center space-x-2 mr-4">
 			<button
 				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={skipPrevious}
+				onclick={playerState.skipPrevious}
 			>
 				<FontAwesomeIcon icon={faBackward} />
 			</button>
@@ -103,7 +74,7 @@
 			</button>
 			<button
 				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={skipNext}
+				onclick={playerState.skipNext}
 			>
 				<FontAwesomeIcon icon={faForward} />
 			</button>
