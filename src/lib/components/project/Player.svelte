@@ -15,17 +15,14 @@
 	}
 
 	let { accessToken = $bindable() }: Props = $props();
-	$inspect(playerState, 'playerState');
 
-	let playing = $derived(playerState.state?.paused ?? false);
-	$inspect(playing, 'playing');
-	$inspect(playerState, 'playerState');
-	let playingTitle = $derived(playerState.state?.track_window.current_track.name);
-	let playingArtists = $derived(
-		playerState.state?.track_window.current_track.artists.map((a) => a.name)
-	);
+	let isPaused = $derived(playerState.state?.paused);
+
+	let playingTrack = $derived(playerState?.state?.track_window?.current_track);
+	let playingTitle = $derived(playingTrack.name);
+	let playingArtists = $derived(playingTrack.artists.map((a) => a.name));
 	let progress_ms = $derived(playerState.state?.position);
-	let duration_ms = $derived(playerState.state?.track_window.current_track.duration_ms);
+	let duration_ms = $derived(playingTrack.duration_ms);
 
 	let trackDurationRatioPercent = $derived((progress_ms / duration_ms) * 100);
 
@@ -49,7 +46,7 @@
 				volume: 0.5
 			});
 
-			playerState.set(p);
+			playerState.setPlayer(p);
 		};
 	});
 </script>
@@ -58,7 +55,7 @@
 	onkeydown={(event) => {
 		if (event.code === 'Space') {
 			event.preventDefault();
-			playerState.pausePlay();
+			playerState.togglePlay();
 		}
 	}}
 />
@@ -67,7 +64,7 @@
 	class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between overflow-x-auto"
 >
 	<div class="flex items-center space-x-4">
-		{#if playing}
+		{#if playingTrack}
 			<div>
 				<p class="text-sm font-semibold">{playingTitle}</p>
 				<p class="text-xs text-gray-500">{playingArtists}</p>
@@ -80,15 +77,15 @@
 		<div class="flex items-center space-x-2 mr-4">
 			<button
 				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={playerState.skipPrevious}
+				onclick={playerState.previousTrack}
 			>
 				<FontAwesomeIcon icon={faBackward} />
 			</button>
 			<button
 				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
-				onclick={playerState.pausePlay}
+				onclick={playerState.togglePlay}
 			>
-				{#if playing}
+				{#if !isPaused}
 					<FontAwesomeIcon icon={faPauseCircle} />
 				{:else}
 					<FontAwesomeIcon icon={faPlayCircle} />
@@ -96,12 +93,12 @@
 			</button>
 			<button
 				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={playerState.skipNext}
+				onclick={playerState.nextTrack}
 			>
 				<FontAwesomeIcon icon={faForward} />
 			</button>
 		</div>
-		{#if playing}
+		{#if playingTrack}
 			<div class="flex items-center space-x-2">
 				<input
 					type="range"

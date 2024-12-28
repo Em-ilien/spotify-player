@@ -1,41 +1,30 @@
 import Cookies from 'cookie-universal';
 
 let player: any;
-let state: any;
-
-let deviceId: string = '';
 
 export const playerState = $state({
-	set: (p) => {
+	state: {} as any,
+	setPlayer: (p: any) => {
 		player = p;
-
 		changePlayer();
 	},
-	pausePlay: async () => {
+	togglePlay: async () => {
 		await player.togglePlay();
 	},
-
-	skipNext: async () => {
+	nextTrack: async () => {
 		await player.nextTrack();
 	},
-
-	skipPrevious: async () => {
+	previousTrack: async () => {
 		await player.previousTrack();
 	},
-
-	setVolume: async (volume_percent: number) => {
-		await player.setVolume(volume_percent);
-	},
-
-	player: player,
-	state: state,
-	deviceId: deviceId
+	setVolume: async (volume_rate: number) => {
+		await player.setVolume(volume_rate);
+	}
 });
 
 const changePlayer = () => {
 	player.addListener('ready', ({ device_id }) => {
 		console.log('Ready with Device ID', device_id);
-		deviceId = device_id;
 
 		const cookies = Cookies();
 		let accessToken = cookies.get('spotify_access_token');
@@ -51,7 +40,7 @@ const changePlayer = () => {
 			})
 		}).then(() => {
 			player.getCurrentState().then((s) => {
-				state = s;
+				playerState.state = s;
 
 				if (!s) {
 					console.error('User is not playing music through the Web Playback SDK');
@@ -79,7 +68,7 @@ const changePlayer = () => {
 	});
 	player.addListener('player_state_changed', (s) => {
 		console.log('Player state changed', s);
-		state = s;
+		playerState.state = s;
 	});
 	player.addListener('autoplay_failed', () => {
 		console.log('Autoplay is not allowed by the browser autoplay rules');
