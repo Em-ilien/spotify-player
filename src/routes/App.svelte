@@ -18,7 +18,7 @@
 
 <SearchBarre {accessToken} />
 
-<div class="mb-20 z-2">
+<div class="mb-28 z-2">
 	<div class="pt-2 pb-3 flex mx-2">
 		{#each tabs as tab}
 			<button
