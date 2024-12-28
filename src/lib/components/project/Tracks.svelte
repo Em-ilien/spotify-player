@@ -4,7 +4,6 @@
 	import { tracksStore } from '$lib/stores/tracksStore';
 
 	import { onMount } from 'svelte';
-	import { playerState } from '$lib/player.svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
 	}
@@ -27,9 +26,7 @@
 			},
 			method: 'PUT',
 			body: JSON.stringify({
-				uris: [trackUri],
-				device_id: playerState.deviceId,
-				play: true
+				uris: [trackUri]
 			})
 		});
 	}
