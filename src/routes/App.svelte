@@ -1,7 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
-	import { playerState } from '$lib/player.svelte';
-
 	import Player from '$lib/components/project/Player.svelte';
 	import SearchBarre from '$lib/components/project/SearchBarre.svelte';
 	import Albums from '$lib/components/project/Albums.svelte';
@@ -17,25 +14,6 @@
 		{ active: false, name: 'Artists', component: Artists },
 		{ active: false, name: 'Tracks', component: Tracks }
 	]);
-
-	onMount(() => {
-		const script = document.createElement('script');
-		script.src = 'https://sdk.scdn.co/spotify-player.js';
-		script.async = true;
-		document.body.appendChild(script);
-
-		window.onSpotifyWebPlaybackSDKReady = () => {
-			let p = new Spotify.Player({
-				name: 'Spotify Player',
-				getOAuthToken: (cb) => {
-					cb(accessToken);
-				},
-				volume: 0.5
-			});
-
-			playerState.set(p);
-		};
-	});
 </script>
 
 <SearchBarre {accessToken} />
@@ -70,4 +48,4 @@
 	{/each}
 </div>
 
-<Player />
+<Player bind:accessToken />

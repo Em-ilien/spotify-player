@@ -8,7 +8,13 @@
 		faPauseCircle
 	} from '@fortawesome/free-solid-svg-icons';
 	import { playerState } from '$lib/player.svelte';
+	import { onMount } from 'svelte';
 
+	interface Props {
+		accessToken?: string;
+	}
+
+	let { accessToken = $bindable() }: Props = $props();
 	$inspect(playerState, 'playerState');
 
 	let playing = $derived(playerState.state?.paused ?? false);
@@ -27,6 +33,25 @@
 	function setVolume() {
 		playerState.setVolume(volume_percent * 0.01);
 	}
+
+	onMount(() => {
+		const script = document.createElement('script');
+		script.src = 'https://sdk.scdn.co/spotify-player.js';
+		script.async = true;
+		document.body.appendChild(script);
+
+		window.onSpotifyWebPlaybackSDKReady = () => {
+			let p = new Spotify.Player({
+				name: 'Spotify Player',
+				getOAuthToken: (cb) => {
+					cb(accessToken);
+				},
+				volume: 0.5
+			});
+
+			playerState.set(p);
+		};
+	});
 </script>
 
 <svelte:body
