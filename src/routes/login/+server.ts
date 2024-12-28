@@ -1,7 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '$env/static/private';
 
-const SCOPES = [
+const SPOTIFY_SCOPES = [
 	'user-library-read',
 	'playlist-read-private',
 	'user-read-playback-state',
@@ -10,21 +10,19 @@ const SCOPES = [
 	'user-read-email',
 	'user-follow-read',
 	'streaming'
-].join(' ');
+];
 
-export const GET: RequestHandler = () => {
-	const redirect_uri = encodeURIComponent(SPOTIFY_REDIRECT_URI);
-
-	const spotifyAuthUrl = `https://accounts.spotify.com/authorize
+const SPOTIFY_AUTH_URL = `https://accounts.spotify.com/authorize
 ?response_type=code
 &client_id=${SPOTIFY_CLIENT_ID}
-&scope=${SCOPES}
-&redirect_uri=${redirect_uri}`;
+&scope=${SPOTIFY_SCOPES.join(' ')}
+&redirect_uri=${encodeURIComponent(SPOTIFY_REDIRECT_URI)}`;
 
+export const GET: RequestHandler = () => {
 	return new Response(null, {
 		status: 302,
 		headers: {
-			Location: spotifyAuthUrl
+			Location: SPOTIFY_AUTH_URL
 		}
 	});
 };
