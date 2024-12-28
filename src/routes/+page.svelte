@@ -12,13 +12,6 @@
 
 	let accessToken: string | undefined | null = $state(undefined);
 
-	const tabs = $state([
-		{ active: true, name: 'Playlists', component: Playlists },
-		{ active: false, name: 'Albums', component: Albums },
-		{ active: false, name: 'Artists', component: Artists },
-		{ active: false, name: 'Tracks', component: Tracks }
-	]);
-
 	onMount(async () => {
 		const cookies = Cookies();
 		accessToken = cookies.get('spotify_access_token');
@@ -61,6 +54,13 @@
 			}
 		}
 	}
+
+	const tabs = $state([
+		{ active: true, name: 'Playlists', component: Playlists },
+		{ active: false, name: 'Albums', component: Albums },
+		{ active: false, name: 'Artists', component: Artists },
+		{ active: false, name: 'Tracks', component: Tracks }
+	]);
 </script>
 
 {#if accessToken === undefined}
