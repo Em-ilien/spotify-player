@@ -22,7 +22,6 @@
 		<p class="color-gray-500">
 			Click the login button above to get started and explore your personalized music library.
 		</p>
-		<p class="color-gray-500">You must have the Spotify app open on your device.</p>
 		<p class="color-gray-500">Your account must have the Spotify Premium subscription.</p>
 	</div>
 </div>
