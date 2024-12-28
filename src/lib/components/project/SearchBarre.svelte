@@ -12,7 +12,6 @@
 	}
 
 	let { accessToken = '' }: Props = $props();
-	// export let playerState = { is_playing: false };
 
 	let searchResults: any[] = $state([]);
 	let searchQuery = $state('');
