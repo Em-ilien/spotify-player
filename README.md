@@ -22,9 +22,9 @@ SPOTIFY_REDIRECT_URI=http://localhost:5173/callback # or any other port
 
 👤 **Emilien Cosson** <emilien@em-ilien.fr>
 
-## Licence
+## License
 
-This project is under the MIT Licence. See the [LICENCE](LICENCE) file for more details.
+This project is under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Show your support
 
