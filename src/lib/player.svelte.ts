@@ -70,10 +70,7 @@ const changePlayer = () => {
 	player.addListener('autoplay_failed', () => {
 		console.log('Autoplay is not allowed by the browser autoplay rules');
 	});
-	player.on('playback_error', ({ message }) => {
-		console.error('Failed to perform playback', message);
-	});
-	player.on('playback_failed', ({ message }) => {
+	player.addListener('playback_error', ({ message }) => {
 		console.error('Failed to perform playback', message);
 	});
 };
