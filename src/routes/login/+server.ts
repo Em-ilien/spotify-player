@@ -6,9 +6,11 @@ const SPOTIFY_SCOPES = [
 	'playlist-read-private',
 	'user-read-playback-state',
 	'user-modify-playback-state',
+	'user-read-currently-playing',
 	'playlist-read-collaborative',
 	'user-read-email',
 	'user-follow-read',
+	'user-read-private',
 	'streaming'
 ];
 
