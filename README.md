@@ -15,7 +15,7 @@ SPOTIFY_CLIENT_ID=<your_spotify_client_id> # You can get these from the Spotify 
 SPOTIFY_CLIENT_SECRET=<your_spotify_client_secret> # Same as above
 ```
 
-5. Run `npm run dev -- -p 5173 --open` to start the development server
+5. Run `npm run dev -- --open` to start the development server
 
 ## Author
 
