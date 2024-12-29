@@ -14,7 +14,7 @@ Needs a Spotify Premium account to work.
 ### Setup
 
 ```sh
-git clone https://github.com/Em-ilien/spotify-player.git
+git clone https://github.com/Em-ilien/Simplayer-Spotify-web.git
 cd spotify-player
 npm install
 ```
