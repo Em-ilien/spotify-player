@@ -13,7 +13,6 @@ A simple Spotify client that allows you to play music from Spotify. Needs a Spot
 ```
 SPOTIFY_CLIENT_ID=<your_spotify_client_id> # You can get these from the Spotify Developer Dashboard
 SPOTIFY_CLIENT_SECRET=<your_spotify_client_secret> # Same as above
-SPOTIFY_REDIRECT_URI=http://localhost:5173/callback # or any other port
 ```
 
 5. Run `npm run dev -- -p 5173 --open` to start the development server

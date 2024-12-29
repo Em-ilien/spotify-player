@@ -1,9 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import {
-	SPOTIFY_CLIENT_ID,
-	SPOTIFY_CLIENT_SECRET,
-	SPOTIFY_REDIRECT_URI
-} from '$env/static/private';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } from '$env/static/private';
 import axios from 'axios';
 
 // We are using the Authorization Code Flow
@@ -22,13 +18,16 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 	if (!state || state !== cookies.get('oauth_state'))
 		return new Response('Invalid state parameter', { status: 400 });
 
+	const { protocol, hostname, port } = url;
+	const redirectUri = `${protocol}//${hostname}${port ? `:${port}` : ''}/callback`;
+
 	try {
 		cookies.delete('oauth_state', { path: '/' });
 
 		const body = new URLSearchParams({
 			grant_type: 'authorization_code',
 			code: code,
-			redirect_uri: SPOTIFY_REDIRECT_URI
+			redirect_uri: redirectUri
 		});
 		const response = await axios.post('https://accounts.spotify.com/api/token', body.toString(), {
 			headers: {

@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI } from '$env/static/private';
+import { SPOTIFY_CLIENT_ID } from '$env/static/private';
 import crypto from 'crypto';
 
 const SPOTIFY_SCOPES = [
@@ -19,7 +19,7 @@ const SPOTIFY_SCOPES = [
 // This is the first step in the flow, where the user is redirected to the Spotify Accounts service to log in and authorize the app with the specified scopes
 // https://developer.spotify.com/documentation/web-api/tutorials/code-flow#request-user-authorization
 
-export const GET: RequestHandler = async ({ cookies }) => {
+export const GET: RequestHandler = async ({ url, cookies }) => {
 	const state = crypto.randomBytes(8).toString('hex'); // 16 characters - https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
 
 	cookies.set('oauth_state', state, {
@@ -30,10 +30,13 @@ export const GET: RequestHandler = async ({ cookies }) => {
 		maxAge: 3600
 	});
 
+	const { protocol, hostname, port } = url;
+	const redirectUri = `${protocol}//${hostname}${port ? `:${port}` : ''}/callback`;
+
 	const params = new URLSearchParams({
 		client_id: SPOTIFY_CLIENT_ID,
 		response_type: 'code',
-		redirect_uri: SPOTIFY_REDIRECT_URI,
+		redirect_uri: redirectUri,
 		state: state,
 		scope: SPOTIFY_SCOPES.join(' ') // https://developer.spotify.com/documentation/general/guides/scopes
 	});
