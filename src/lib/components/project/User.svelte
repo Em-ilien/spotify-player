@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { faSignOut, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+	import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 
 	interface Props {

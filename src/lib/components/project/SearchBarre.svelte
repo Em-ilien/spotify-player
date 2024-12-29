@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { run, stopPropagation } from 'svelte/legacy';
+	import { run } from 'svelte/legacy';
 
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay, faSearch, faTimesSquare } from '@fortawesome/free-solid-svg-icons';
@@ -52,6 +52,13 @@
 			})
 		});
 	}
+
+	function onkeydown(event: KeyboardEvent) {
+		event.stopPropagation();
+		if (event.key === 'Escape') {
+			stopSearch();
+		}
+	}
 </script>
 
 <div class="py-6 border-b-gray-300">
@@ -77,11 +84,7 @@
 				placeholder="Search for a track..."
 				bind:value={searchQuery}
 				class="outline-none w-full ml-2 text-sm"
-				onkeydown={stopPropagation((event) => {
-					if (event.key === 'Escape') {
-						stopSearch();
-					}
-				})}
+				{onkeydown}
 			/>
 		</div>
 

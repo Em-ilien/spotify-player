@@ -3,7 +3,7 @@ import type { Writable } from 'svelte/store';
 import axios from 'axios';
 import { isAuthentified } from '$lib/authentification.svelte';
 
-export const playlistsStore: Writable<{ id: number; name: string }[]> = writable([]);
+export const playlistsStore: Writable<{ id: string; name: string }[]> = writable([]);
 
 async function fetchPlaylists() {
 	try {

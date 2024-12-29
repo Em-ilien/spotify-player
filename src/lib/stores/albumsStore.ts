@@ -4,7 +4,7 @@ import axios from 'axios';
 import { isAuthentified } from '$lib/authentification.svelte';
 
 export const albumsStore: Writable<
-	{ album: { id: number; name: string; artists: { name: string }[] } }[]
+	{ album: { id: string; name: string; artists: { name: string }[] } }[]
 > = writable([]);
 
 async function fetchAlbums() {
