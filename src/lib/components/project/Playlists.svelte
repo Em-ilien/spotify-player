@@ -11,18 +11,7 @@
 
 	let notNullPlaylists = $derived($playlistsStore?.filter((playlist) => playlist !== null));
 
-	async function playPlaylist(playlistUri: any) {
-		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		});
-		const devices = await devicesResponse.json();
-
-		if (devices.devices.length === 0) {
-			alert('No active devices found. Please open Spotify on one of your devices.');
-			return;
-		}
+	async function playPlaylist(playlistUri: string) {
 		fetch('https://api.spotify.com/v1/me/player/play', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
