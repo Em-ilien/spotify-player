@@ -8,7 +8,8 @@
 		class="flex items-center bg-black text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-300"
 		onclick={() => (window.location.href = '/login')}
 	>
-		<FontAwesomeIcon icon={faSignInAlt} class="mr-2" /> <span>Login</span>
+		<FontAwesomeIcon icon={faSignInAlt} class="mr-2" style={'witdh: 16px;height:16px;'} />
+		<span>Login</span>
 	</button>
 
 	<div class="mt-8">

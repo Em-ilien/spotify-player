@@ -78,7 +78,11 @@
 		{/if}
 
 		<div class="flex items-center border rounded p-2 flex-grow">
-			<FontAwesomeIcon icon={faSearch} class="text-gray-300 text-sm" />
+			<FontAwesomeIcon
+				icon={faSearch}
+				class="text-gray-300 text-sm"
+				style={'witdh: 14px; height:14px;'}
+			/>
 			<input
 				type="text"
 				placeholder="Search for a track..."
