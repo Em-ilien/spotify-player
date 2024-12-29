@@ -94,23 +94,23 @@
 				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
 				onclick={playerState.previousTrack}
 			>
-				<FontAwesomeIcon icon={faBackward} />
+			<FontAwesomeIcon icon={faBackward} style={'width: 16px; height: 16px'} />
 			</button>
 			<button
 				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
 				onclick={playerState.togglePlay}
 			>
 				{#if !isPaused}
-					<FontAwesomeIcon icon={faPauseCircle} />
+				<FontAwesomeIcon icon={faPauseCircle} style={'width: 24px; height: 24px'} />
 				{:else}
-					<FontAwesomeIcon icon={faPlayCircle} />
+				<FontAwesomeIcon icon={faPlayCircle} style={'width: 24px; height: 24px'} />
 				{/if}
 			</button>
 			<button
 				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
 				onclick={playerState.nextTrack}
 			>
-				<FontAwesomeIcon icon={faForward} />
+			<FontAwesomeIcon icon={faForward} style={'width: 16px; height: 16px'} />
 			</button>
 		</div>
 		{#if playingTrack}
@@ -138,7 +138,9 @@
 		{/if}
 	</div>
 	<div class="flex items-center space-x-2 ml-4">
-		<span class="text-gray-500"><FontAwesomeIcon icon={faVolumeUp} /></span>
+	<span class="text-gray-500"
+		><FontAwesomeIcon icon={faVolumeUp} style={'width: 20px; height: 16px'} /></span
+	>
 		<input
 			type="range"
 			min="0"
