@@ -9,7 +9,7 @@
 
 	let { accessToken = undefined }: Props = $props();
 
-	let albums = $albumsStore;
+	let albums = $derived($albumsStore);
 
 	async function playAlbum(albumUri: string) {
 		fetch('https://api.spotify.com/v1/me/player/play', {
