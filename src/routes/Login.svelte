@@ -3,7 +3,12 @@
 	import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 </script>
 
-<div class="flex flex-col justify-center items-center h-screen">
+<div class="flex flex-col justify-center items-center h-screen p-4 text-gray-800">
+	<h1 class="text-4xl font-bold text-gray-700 text-center mb-4">Simplayer Spotify</h1>
+	<p class="text-center mb-12">
+		The dumbest Spotify player web client ever that lets you play music from Spotify without any
+		lag.
+	</p>
 	<button
 		class="flex items-center bg-black text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-300"
 		onclick={() => (window.location.href = '/login')}
@@ -12,17 +17,13 @@
 		<span>Login</span>
 	</button>
 
-	<div class="mt-8">
-		<p class="color-gray-500 font-bold mb-4">
-			Currently the app is in private beta, come back later!
-		</p>
-		<p class="color-gray-500">
-			Welcome to Spotify Player! This app allows you to log in with your Spotify account and view
+	<div class="mt-16">
+		<p class="font-bold mb-4">Currently the app is in private beta, come back later!</p>
+		<p>
+			Welcome to Simplayer Spotify! This app allows you to log in with your Spotify account and view
 			your favorite tracks, artists, and playlists.
 		</p>
-		<p class="color-gray-500">
-			Click the login button above to get started and explore your personalized music library.
-		</p>
-		<p class="color-gray-500">Your account must have the Spotify Premium subscription.</p>
+		<p>Click the login button above to get started and explore your personalized music library.</p>
+		<p>Your account must have the Spotify Premium subscription.</p>
 	</div>
 </div>
