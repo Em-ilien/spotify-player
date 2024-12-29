@@ -5,6 +5,7 @@
 	import Artists from '$lib/components/project/Artists.svelte';
 	import Playlists from '$lib/components/project/Playlists.svelte';
 	import Tracks from '$lib/components/project/Tracks.svelte';
+	import Footer from '$lib/components/project/Footer.svelte';
 
 	interface Props {
 		accessToken: string;
@@ -20,36 +21,47 @@
 	]);
 </script>
 
-<SearchBarre {accessToken} />
+<div class="flex flex-col h-screen overflow-hidden">
+	<div class="flex flex-col h-full overflow-y-scroll">
+		<SearchBarre {accessToken} />
 
-<div class="mb-28 z-2">
-	<div class="pt-2 pb-3 flex mx-2">
-		{#each tabs as tab}
-			<button
-				class="px-4 cursor-pointer bg-transparent text-sm group"
-				onclick={() => {
-					tabs.forEach((t) => (t.active = false));
-					tab.active = true;
-				}}
-			>
-				<div
-					class=" py-2 border-b-2 border-transparent
+		<div class="z-2 h-full flex flex-col">
+			<div class="pt-2 pb-3 flex mx-2">
+				{#each tabs as tab}
+					<button
+						class="px-4 cursor-pointer bg-transparent text-sm group"
+						onclick={() => {
+							tabs.forEach((t) => (t.active = false));
+							tab.active = true;
+						}}
+					>
+						<div
+							class=" py-2 border-b-2 border-transparent
 						{tab.active
-						? 'border-b-gray-400 text-black'
-						: 'group-hover:text-gray-700 group-hover:border-b-gray-200 group-hover:border-b-2 text-gray-500'}
+								? 'border-b-gray-400 text-black'
+								: 'group-hover:text-gray-700 group-hover:border-b-gray-200 group-hover:border-b-2 text-gray-500'}
 						"
-				>
-					<span>{tab.name}</span>
+						>
+							<span>{tab.name}</span>
+						</div>
+					</button>
+				{/each}
+			</div>
+
+			<div class="h-full flex flex-col justify-between">
+				{#each tabs as tab}
+					{#if tab.active}
+						<tab.component {accessToken} />
+					{/if}
+				{/each}
+
+				<div class="mt-auto pt-8">
+					<Footer />
 				</div>
-			</button>
-		{/each}
+			</div>
+		</div>
 	</div>
-
-	{#each tabs as tab}
-		{#if tab.active}
-			<tab.component {accessToken} />
-		{/if}
-	{/each}
+	<div class="w-full border-t border-slate-500 bg-white p-4 flex justify-between">
+		<Player {accessToken} />
+	</div>
 </div>
-
-<Player {accessToken} />

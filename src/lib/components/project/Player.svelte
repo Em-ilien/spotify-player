@@ -75,82 +75,78 @@
 	}}
 />
 
-<div
-	class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between overflow-x-auto"
->
-	<div class="flex items-center space-x-4">
-		{#if playingTrack}
-			<div>
-				<p class="text-sm font-semibold">{playingTitle}</p>
-				<p class="text-xs text-gray-500">{playingArtists}</p>
-			</div>
-		{:else}
-			<p class="text-sm text-gray-500">No track currently playing</p>
-		{/if}
-	</div>
-	<div class="flex space-x-2">
-		<div class="flex items-center space-x-2 mr-4">
-			<button
-				class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={playerState.previousTrack}
-			>
-			<FontAwesomeIcon icon={faBackward} style={'width: 16px; height: 16px'} />
-			</button>
-			<button
-				class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
-				onclick={playerState.togglePlay}
-			>
-				{#if !isPaused}
-				<FontAwesomeIcon icon={faPauseCircle} style={'width: 24px; height: 24px'} />
-				{:else}
-				<FontAwesomeIcon icon={faPlayCircle} style={'width: 24px; height: 24px'} />
-				{/if}
-			</button>
-			<button
-				class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
-				onclick={playerState.nextTrack}
-			>
-			<FontAwesomeIcon icon={faForward} style={'width: 16px; height: 16px'} />
-			</button>
+<div class="flex items-center space-x-4">
+	{#if playingTrack}
+		<div>
+			<p class="text-sm font-semibold">{playingTitle}</p>
+			<p class="text-xs text-gray-500">{playingArtists}</p>
 		</div>
-		{#if playingTrack}
-			<div class="flex items-center space-x-2">
-				<span class="text-gray-500"
-					>{Math.floor(progress_ms / 60000)}:{Math.floor((progress_ms % 60000) / 1000)
-						.toString()
-						.padStart(2, '0')}</span
-				>
-				<input
-					type="range"
-					min="0"
-					max={duration_ms}
-					value={progress_ms}
-					oninput={changeProgress}
-					class="w-64 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-					style="background: linear-gradient(to right, #4caf50 {trackDurationRatioPercent}%, #d3d3d3 {trackDurationRatioPercent}%, #d3d3d3 100%);"
-				/>
-				<span class="text-gray-500"
-					>{Math.floor(duration_ms / 60000)}:{Math.floor((duration_ms % 60000) / 1000)
-						.toString()
-						.padStart(2, '0')}</span
-				>
-			</div>
-		{/if}
+	{:else}
+		<p class="text-sm text-gray-500">No track currently playing</p>
+	{/if}
+</div>
+<div class="flex space-x-2">
+	<div class="flex items-center space-x-2 mr-4">
+		<button
+			class="font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
+			onclick={playerState.previousTrack}
+		>
+			<FontAwesomeIcon icon={faBackward} style={'width: 16px; height: 16px'} />
+		</button>
+		<button
+			class="font-bold py-3 rounded transition duration-300 text-gray-400 text-2xl"
+			onclick={playerState.togglePlay}
+		>
+			{#if !isPaused}
+				<FontAwesomeIcon icon={faPauseCircle} style={'width: 24px; height: 24px'} />
+			{:else}
+				<FontAwesomeIcon icon={faPlayCircle} style={'width: 24px; height: 24px'} />
+			{/if}
+		</button>
+		<button
+			class=" font-bold py-2 px-4 rounded transition duration-300 text-gray-400"
+			onclick={playerState.nextTrack}
+		>
+			<FontAwesomeIcon icon={faForward} style={'width: 16px; height: 16px'} />
+		</button>
 	</div>
-	<div class="flex items-center space-x-2 ml-4">
+	{#if playingTrack}
+		<div class="flex items-center space-x-2">
+			<span class="text-gray-500"
+				>{Math.floor(progress_ms / 60000)}:{Math.floor((progress_ms % 60000) / 1000)
+					.toString()
+					.padStart(2, '0')}</span
+			>
+			<input
+				type="range"
+				min="0"
+				max={duration_ms}
+				value={progress_ms}
+				oninput={changeProgress}
+				class="w-64 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+				style="background: linear-gradient(to right, #4caf50 {trackDurationRatioPercent}%, #d3d3d3 {trackDurationRatioPercent}%, #d3d3d3 100%);"
+			/>
+			<span class="text-gray-500"
+				>{Math.floor(duration_ms / 60000)}:{Math.floor((duration_ms % 60000) / 1000)
+					.toString()
+					.padStart(2, '0')}</span
+			>
+		</div>
+	{/if}
+</div>
+<div class="flex items-center space-x-2 ml-4">
 	<span class="text-gray-500"
 		><FontAwesomeIcon icon={faVolumeUp} style={'width: 20px; height: 16px'} /></span
 	>
-		<input
-			type="range"
-			min="0"
-			max="100"
-			bind:value={volume_percent}
-			oninput={setVolume}
-			class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-			style="background: linear-gradient(to right, #4caf50 {volume_percent}%, #d3d3d3 {volume_percent}%, #d3d3d3 100%);"
-		/>
-	</div>
+	<input
+		type="range"
+		min="0"
+		max="100"
+		bind:value={volume_percent}
+		oninput={setVolume}
+		class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+		style="background: linear-gradient(to right, #4caf50 {volume_percent}%, #d3d3d3 {volume_percent}%, #d3d3d3 100%);"
+	/>
 </div>
 
 <style>
