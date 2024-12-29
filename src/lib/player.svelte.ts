@@ -1,5 +1,3 @@
-import Cookies from 'cookie-universal';
-
 let player: any;
 
 export const playerState = $state({
@@ -29,19 +27,15 @@ const changePlayer = () => {
 	player.addListener('ready', ({ device_id }) => {
 		console.log('Ready with Device ID', device_id);
 
-		const cookies = Cookies();
-		let accessToken = cookies.get('spotify_access_token');
-
-		fetch('https://api.spotify.com/v1/me/player', {
+		fetch('/api/player', {
+			method: 'PUT',
 			headers: {
-				Authorization: `Bearer ${accessToken}`,
 				'Content-Type': 'application/json'
 			},
-			method: 'PUT',
-			body: JSON.stringify({
-				device_ids: [device_id]
-			})
-		}).then(() => {
+			body: JSON.stringify({ device_id })
+		}).then((res) => {
+			console.log('Player connected to Spotify', res);
+
 			player.getCurrentState().then((s) => {
 				playerState.state = s;
 
