@@ -14,7 +14,7 @@
 		accessToken?: string;
 	}
 
-	let { accessToken = $bindable() }: Props = $props();
+	let { accessToken = undefined }: Props = $props();
 
 	let isPaused = $derived(playerState.state?.paused);
 

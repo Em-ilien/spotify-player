@@ -8,10 +8,10 @@
 	import User from './User.svelte';
 
 	interface Props {
-		accessToken?: string;
+		accessToken: string;
 	}
 
-	let { accessToken = '' }: Props = $props();
+	let { accessToken }: Props = $props();
 
 	let searchResults: any[] = $state([]);
 	let searchQuery = $state('');

@@ -4,10 +4,10 @@
 	import { onMount } from 'svelte';
 
 	interface Props {
-		accessToken?: string;
+		accessToken: string;
 	}
 
-	let { accessToken = '' }: Props = $props();
+	let { accessToken }: Props = $props();
 
 	let avatarUrl = $state('');
 	let userName = $state('');
@@ -30,7 +30,7 @@
 		fetch('/api/logout', {
 			method: 'POST'
 		}).then(() => {
-		window.location.href = '/';
+			window.location.href = '/';
 		});
 	}
 

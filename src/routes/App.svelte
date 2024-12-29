@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Player from '$lib/components/project/Player.svelte';
 	import SearchBarre from '$lib/components/project/SearchBarre.svelte';
 	import Albums from '$lib/components/project/Albums.svelte';
@@ -6,7 +6,11 @@
 	import Playlists from '$lib/components/project/Playlists.svelte';
 	import Tracks from '$lib/components/project/Tracks.svelte';
 
-	let { accessToken = $bindable() } = $props();
+	interface Props {
+		accessToken: string;
+	}
+
+	let { accessToken }: Props = $props();
 
 	const tabs = $state([
 		{ active: true, name: 'Playlists', component: Playlists },
@@ -48,4 +52,4 @@
 	{/each}
 </div>
 
-<Player bind:accessToken />
+<Player {accessToken} />
