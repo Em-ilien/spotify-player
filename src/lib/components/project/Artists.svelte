@@ -3,7 +3,6 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { artistsStore } from '$lib/stores/artistsStore';
 
-
 	import { onMount } from 'svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
