@@ -16,14 +16,14 @@
 
 	let { accessToken = undefined }: Props = $props();
 
-	let isPaused = $derived(playerState.state?.paused);
+	let isPaused = $derived(playerState?.state?.paused);
 
 	let playingTrack = $derived(playerState?.state?.track_window?.current_track);
-	let playingTitle = $derived(playingTrack.name);
-	let playingArtists = $derived(playingTrack.artists.map((a) => a.name));
-	let duration_ms = $derived(playingTrack.duration_ms);
+	let playingTitle = $derived(playingTrack?.name);
+	let playingArtists = $derived(playingTrack?.artists.map((a) => a.name));
+	let duration_ms = $derived(playingTrack?.duration_ms);
 
-	let progress_ms = $state(playerState.state?.position);
+	let progress_ms = $state(playerState?.state?.position);
 
 	$effect(() => {
 		progress_ms = playerState.state?.position;
