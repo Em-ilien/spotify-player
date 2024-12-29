@@ -1,21 +1,37 @@
-# Spotify Player
+# Simplayer Spotify - web app Spotify player
 
-A simple Spotify client that allows you to play music from Spotify. Needs a Spotify Premium account to work.
+The dumbest Spotify player web client ever that lets you play music from Spotify without any lag.
+
+Needs a Spotify Premium account to work.
 
 ## Installation
 
-0. Subscribe to Spotify Premium if you haven't already.
-1. Create a Spotify Developer account and create a new app to get the client ID and secret.
-2. Clone the repository with `git clone https://github.com/Em-ilien/spotify-player.git`
-3. Run `npm install`
-4. Create an `.env.local` file in the root of the project and add the following:
+### Prerequisites
+
+- Subscribe to Spotify Premium if you haven't already.
+- Create a Spotify Developer account and create a new app to get the client ID and secret.
+
+### Setup
+
+```sh
+git clone https://github.com/Em-ilien/spotify-player.git
+cd spotify-player
+npm install
+```
+
+Then, create a `.env.local` file at the root of the project and add the following environment variables:
 
 ```
-SPOTIFY_CLIENT_ID=<your_spotify_client_id> # You can get these from the Spotify Developer Dashboard
-SPOTIFY_CLIENT_SECRET=<your_spotify_client_secret> # Same as above
+# .env.local:
+SPOTIFY_CLIENT_ID=<your_client_id> # Replace with your Spotify client ID
+SPOTIFY_CLIENT_SECRET=<your_client_secret> # Replace with your Spotify client secret
 ```
 
-5. Run `npm run dev -- --open` to start the development server
+Start the development server:
+
+```sh
+npm run dev -- --open
+```
 
 ## Author
 
