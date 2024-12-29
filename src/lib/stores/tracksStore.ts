@@ -1,8 +1,11 @@
 import { writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 import axios from 'axios';
 import { isAuthentified } from '$lib/authentification.svelte';
 
-export const tracksStore = writable([]);
+export const tracksStore: Writable<
+	{ track: { uri: string; id: number; name: string; artists: { name: string }[] } }[]
+> = writable([]);
 
 async function fetchTracks() {
 	try {

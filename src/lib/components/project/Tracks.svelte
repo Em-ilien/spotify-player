@@ -3,20 +3,13 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { tracksStore } from '$lib/stores/tracksStore';
 
-	import { onMount } from 'svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
 	}
 
 	let { accessToken = undefined }: Props = $props();
 
-	let tracks: string | any[] = $state([]);
-
-	onMount(() => {
-		tracksStore.subscribe((value) => {
-			tracks = value;
-		});
-	});
+	let tracks = $tracksStore;
 
 	async function playTrack(trackUri: any) {
 		await fetch('https://api.spotify.com/v1/me/player/play', {

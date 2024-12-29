@@ -3,21 +3,13 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { artistsStore } from '$lib/stores/artistsStore';
 
-	import { onMount } from 'svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
 	}
 
 	let { accessToken = undefined }: Props = $props();
 
-	let artists: string | any[] = $state([]);
-
-	onMount(() => {
-		artistsStore.subscribe((value) => {
-			artists = value;
-		});
-	});
-
+	let artists = $artistsStore;
 	async function playArtist(artistUri: any) {
 		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
 			headers: {

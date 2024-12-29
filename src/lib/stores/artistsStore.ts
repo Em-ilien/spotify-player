@@ -1,8 +1,9 @@
 import { writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 import axios from 'axios';
 import { isAuthentified } from '$lib/authentification.svelte';
 
-export const artistsStore = writable([]);
+export const artistsStore: Writable<{ id: number; name: string; image: string }[]> = writable([]);
 
 async function fetchArtists() {
 	try {

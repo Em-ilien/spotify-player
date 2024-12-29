@@ -3,21 +3,13 @@
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { playlistsStore } from '$lib/stores/playlistsStore';
 
-	import { onMount } from 'svelte';
 	interface Props {
 		accessToken?: string | undefined | null;
 	}
 
 	let { accessToken = undefined }: Props = $props();
 
-	let playlists: { id: number; name: string }[] = $state([]);
-	let notNullPlaylists = $derived(playlists?.filter((playlist) => playlist !== null));
-
-	onMount(() => {
-		playlistsStore.subscribe((value) => {
-			playlists = value;
-		});
-	});
+	let notNullPlaylists = $derived($playlistsStore?.filter((playlist) => playlist !== null));
 
 	async function playPlaylist(playlistUri: any) {
 		const devicesResponse = await fetch('https://api.spotify.com/v1/me/player/devices', {
