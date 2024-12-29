@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Cookies from 'cookie-universal';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faSignOut, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
@@ -28,10 +27,11 @@
 	});
 
 	function logout() {
-		const cookies = Cookies();
-		cookies.remove('spotify_access_token', { path: '/' });
-		cookies.remove('spotify_refresh_token', { path: '/' });
+		fetch('/api/logout', {
+			method: 'POST'
+		}).then(() => {
 		window.location.href = '/';
+		});
 	}
 
 	function toggleLogoutButton() {
