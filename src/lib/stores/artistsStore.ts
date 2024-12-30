@@ -10,7 +10,8 @@ async function fetchArtists() {
 		const response = await axios.get('/api/artists');
 		const artists = response.data;
 		artistsStore.set(artists);
-	} catch (error) {
+	} catch (error: any) {
+		if (error.code === 'ECONNABORTED') return;
 		console.error('Error fetching artists:', error);
 	}
 }

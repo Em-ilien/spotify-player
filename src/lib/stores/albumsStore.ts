@@ -12,7 +12,8 @@ async function fetchAlbums() {
 		const response = await axios.get('/api/albums');
 		const albums = response.data;
 		albumsStore.set(albums);
-	} catch (error) {
+	} catch (error: any) {
+		if (error.code === 'ECONNABORTED') return;
 		console.error('Error fetching albums:', error);
 	}
 }

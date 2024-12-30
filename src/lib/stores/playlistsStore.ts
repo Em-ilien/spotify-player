@@ -10,7 +10,8 @@ async function fetchPlaylists() {
 		const response = await axios.get('/api/playlists');
 		const playlists = response.data;
 		playlistsStore.set(playlists);
-	} catch (error) {
+	} catch (error: any) {
+		if (error.code === 'ECONNABORTED') return;
 		console.error('Error fetching playlists:', error);
 	}
 }

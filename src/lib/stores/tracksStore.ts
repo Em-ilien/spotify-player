@@ -12,7 +12,8 @@ async function fetchTracks() {
 		const response = await axios.get('/api/tracks');
 		const tracks = response.data;
 		tracksStore.set(tracks);
-	} catch (error) {
+	} catch (error: any) {
+		if (error.code === 'ECONNABORTED') return;
 		console.error('Error fetching tracks:', error);
 	}
 }
