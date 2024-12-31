@@ -16,6 +16,8 @@
 	let searchResults: any[] = $state([]);
 	let searchQuery = $state('');
 
+	let selectedResult = $state(0);
+
 	async function searchTracks() {
 		if (!searchQuery) return;
 		const response = await fetch(
@@ -55,8 +57,22 @@
 
 	function onkeydown(event: KeyboardEvent) {
 		event.stopPropagation();
-		if (event.key === 'Escape') {
-			stopSearch();
+
+		switch (event.key) {
+			case 'Escape':
+				stopSearch();
+				break;
+			case 'ArrowDown':
+				selectedResult = Math.min(selectedResult + 1, searchResults.length - 1);
+				break;
+			case 'ArrowUp':
+				selectedResult = Math.max(selectedResult - 1, 0);
+				break;
+			case 'Enter':
+				playTrack(searchResults[selectedResult].uri);
+				break;
+			default:
+				selectedResult = 0;
 		}
 	}
 </script>
@@ -98,10 +114,13 @@
 	</div>
 	{#if searchResults.length > 0}
 		<ul class="mt-2 pb-6 border-b-gray-500 border-b-2">
-			{#each searchResults as track}
+			{#each searchResults as track, i}
 				<li>
 					<button
-						class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline"
+						class="px-6 py-1 cursor-pointer hover:bg-slate-100 w-full flex items-baseline {i ===
+						selectedResult
+							? 'bg-slate-200'
+							: ''}"
 						onclick={() => playTrack(track.uri)}
 					>
 						<FontAwesomeIcon icon={faPlay} class="text-gray-400 text-xs mr-3" />
