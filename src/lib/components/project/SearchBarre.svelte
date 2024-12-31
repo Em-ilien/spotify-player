@@ -76,7 +76,16 @@
 				selectedResult = 0;
 		}
 	}
+
+	function handleKeydownWindow(event: KeyboardEvent) {
+		if (event.key === '/') {
+			event.preventDefault();
+			document.querySelector('input')?.focus();
+		}
+	}
 </script>
+
+<svelte:window on:keydown={handleKeydownWindow} />
 
 <div class="py-6 border-b-gray-300">
 	<div class="px-6 flex items-center justify-between">
@@ -102,7 +111,7 @@
 			/>
 			<input
 				type="text"
-				placeholder="Search for a track..."
+				placeholder="/  Search for a track..."
 				bind:value={searchQuery}
 				class="outline-none w-full ml-2 text-sm"
 				{onkeydown}
