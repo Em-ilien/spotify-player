@@ -61,6 +61,7 @@
 		switch (event.key) {
 			case 'Escape':
 				stopSearch();
+				document.querySelector('input')?.blur();
 				break;
 			case 'ArrowDown':
 				selectedResult = Math.min(selectedResult + 1, searchResults.length - 1);
