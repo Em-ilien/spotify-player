@@ -9,6 +9,7 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import { playerState } from '$lib/player.svelte';
 	import { onDestroy, onMount } from 'svelte';
+	import SpotifyConnectDevices from './SpotifyConnectDevices.svelte';
 
 	interface Props {
 		accessToken?: string;
@@ -136,19 +137,22 @@
 		</div>
 	{/if}
 </div>
-<div class="flex items-center space-x-2 ml-4">
-	<span class="text-gray-500"
-		><FontAwesomeIcon icon={faVolumeUp} style={'width: 20px; height: 16px'} /></span
-	>
-	<input
-		type="range"
-		min="0"
-		max="100"
-		bind:value={volume_percent}
-		oninput={setVolume}
-		class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-		style="background: linear-gradient(to right, #4caf50 {volume_percent}%, #d3d3d3 {volume_percent}%, #d3d3d3 100%);"
-	/>
+<div class="flex">
+	<SpotifyConnectDevices {accessToken} />
+	<div class="flex items-center space-x-2 ml-4">
+		<span class="text-gray-500"
+			><FontAwesomeIcon icon={faVolumeUp} style={'width: 20px; height: 16px'} /></span
+		>
+		<input
+			type="range"
+			min="0"
+			max="100"
+			bind:value={volume_percent}
+			oninput={setVolume}
+			class="w-25 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+			style="background: linear-gradient(to right, #4caf50 {volume_percent}%, #d3d3d3 {volume_percent}%, #d3d3d3 100%);"
+		/>
+	</div>
 </div>
 
 <style>
