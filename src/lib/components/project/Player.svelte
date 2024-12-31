@@ -8,7 +8,7 @@
 		faPauseCircle
 	} from '@fortawesome/free-solid-svg-icons';
 	import { playerState } from '$lib/player.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	interface Props {
 		accessToken?: string;
@@ -63,6 +63,8 @@
 
 			playerState.setPlayer(p);
 		};
+
+		return () => playerState.disconnect();
 	});
 </script>
 
