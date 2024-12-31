@@ -54,7 +54,7 @@
 
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			let p = new Spotify.Player({
-				name: 'Spotify Player',
+				name: 'Simplayer Spotify Player',
 				getOAuthToken: (cb) => {
 					cb(accessToken);
 				},
