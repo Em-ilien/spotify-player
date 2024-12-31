@@ -10,6 +10,10 @@
 	setAuthentified(accessToken !== null && accessToken !== undefined);
 </script>
 
+<svelte:head>
+	<title>Simplayer Spotify</title>
+</svelte:head>
+
 {#if accessToken == null}
 	<Login />
 {:else}
