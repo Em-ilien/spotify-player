@@ -19,7 +19,27 @@
 		{ active: false, name: 'Artists', component: Artists },
 		{ active: false, name: 'Tracks', component: Tracks }
 	]);
+
+	function onkeydown(event: KeyboardEvent) {
+		if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+		event.preventDefault();
+		const activeIndex = tabs.findIndex((tab) => tab.active);
+
+		if (event.key === 'ArrowLeft') {
+			if (activeIndex > 0) {
+				tabs[activeIndex].active = false;
+				tabs[activeIndex - 1].active = true;
+			}
+		} else {
+			if (activeIndex < tabs.length - 1) {
+				tabs[activeIndex].active = false;
+				tabs[activeIndex + 1].active = true;
+			}
+		}
+	}
 </script>
+
+<svelte:body {onkeydown} />
 
 <div class="flex flex-col h-screen overflow-hidden">
 	<div class="flex flex-col h-full overflow-y-scroll">
