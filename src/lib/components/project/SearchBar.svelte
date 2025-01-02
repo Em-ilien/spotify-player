@@ -160,7 +160,7 @@
 	let searchInput: HTMLInputElement;
 
 	function handleKeydownWindow(event: KeyboardEvent) {
-		if (event.key === '/') {
+		if (event.key === '/' || (event.ctrlKey && event.key === 'f')) {
 			event.preventDefault();
 			searchInput?.focus();
 		}
