@@ -22,7 +22,7 @@
 			</Audiotheque>
 		</div>
 	</div>
-	<div class="fixed bottom-0 w-full border-t border-slate-500 bg-white p-4 flex justify-between">
+	<div class="w-full border-t border-slate-500 bg-white p-4 flex justify-between">
 		<Player {accessToken} />
 	</div>
 </div>
