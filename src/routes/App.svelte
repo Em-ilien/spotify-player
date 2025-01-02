@@ -10,7 +10,9 @@
 
 <div class="flex flex-col h-screen overflow-hidden">
 	<div class="flex flex-col h-full overflow-y-scroll">
-		<SearchBar {accessToken} />
+		<div class="py-6 border-b-gray-300">
+			<SearchBar {accessToken} />
+		</div>
 
 		<div class="z-2 h-full flex flex-col">
 			<Audiotheque {accessToken}>
