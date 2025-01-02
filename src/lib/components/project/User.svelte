@@ -12,7 +12,6 @@
 	let avatarUrl = $state('');
 	let userName = $state('');
 	let userEmailAddress = $state('');
-	let showUserMenu = $state(false);
 
 	onMount(async () => {
 		const response = await fetch('https://api.spotify.com/v1/me', {
@@ -34,27 +33,30 @@
 		});
 	}
 
+	let menu: HTMLElement;
+	let showMenu = $state(false);
+
 	function toggleMenu(event: KeyboardEvent | MouseEvent) {
 		if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
 
-		showUserMenu = !showUserMenu;
+		showMenu = !showMenu;
 		event.preventDefault();
 		event.stopPropagation();
 	}
 
 	function handleClose(event: MouseEvent | KeyboardEvent) {
-		if (!showUserMenu) return;
+		if (!showMenu) return;
 
 		if (event instanceof KeyboardEvent && event.key !== 'Escape') return;
 
 		if (
 			event instanceof MouseEvent &&
 			event.target instanceof HTMLElement &&
-			event.target.closest('button')
+			menu.contains(event.target)
 		)
 			return;
 
-		showUserMenu = false;
+		showMenu = false;
 	}
 
 	function stopPropagation(event: MouseEvent) {
@@ -64,19 +66,21 @@
 
 <svelte:body onclick={handleClose} onkeydown={handleClose} />
 
-<div class="flex items-center relative" onclick={stopPropagation} role="none">
-	<button tabindex="0" onclick={toggleMenu} onkeydown={toggleMenu}>
-		{#if avatarUrl}
-			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
-		{:else}
-			<span
-				class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-9 h-9 flex items-center justify-center"
-			>
-				{userName.charAt(0).toUpperCase()}
-			</span>
-		{/if}
-	</button>
-	{#if showUserMenu}
+<div class="flex items-center relative" bind:this={menu}>
+	<div onclick={stopPropagation} role="none">
+		<button tabindex="0" onclick={toggleMenu} onkeydown={toggleMenu}>
+			{#if avatarUrl}
+				<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
+			{:else}
+				<span
+					class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-9 h-9 flex items-center justify-center"
+				>
+					{userName.charAt(0).toUpperCase()}
+				</span>
+			{/if}
+		</button>
+	</div>
+	{#if showMenu}
 		<div
 			class="absolute top-full right-0 mt-3 py-4 px-2 bg-white border border-gray-300 rounded shadow-lg"
 		>
