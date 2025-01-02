@@ -34,35 +34,38 @@
 		});
 	}
 
-	function toggleLogoutButton() {
+	function toggleMenu(event: KeyboardEvent | MouseEvent) {
+		if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
+
 		showUserMenu = !showUserMenu;
+		event.preventDefault();
+		event.stopPropagation();
 	}
 
-	let userMenu: HTMLElement;
+	function handleClose(event: MouseEvent | KeyboardEvent) {
+		if (!showUserMenu) return;
 
-	function handleClickOutside(event: MouseEvent) {
-		if (userMenu && !userMenu.contains(event.target as Node)) {
-			showUserMenu = false;
-		}
+		if (event instanceof KeyboardEvent && event.key !== 'Escape') return;
+
+		if (
+			event instanceof MouseEvent &&
+			event.target instanceof HTMLElement &&
+			event.target.closest('button')
+		)
+			return;
+
+		showUserMenu = false;
 	}
 
-	function onfocuscapture(event: FocusEvent) {
-		if (userMenu && !userMenu.contains(event.relatedTarget as Node)) {
-			showUserMenu = true;
-		}
-	}
-
-	function onblurcapture(event: FocusEvent) {
-		if (userMenu && !userMenu.contains(event.relatedTarget as Node)) {
-			showUserMenu = false;
-		}
+	function stopPropagation(event: MouseEvent) {
+		event.stopPropagation();
 	}
 </script>
 
-<svelte:window onclick={handleClickOutside} />
+<svelte:body onclick={handleClose} onkeydown={handleClose} />
 
-<div class="flex items-center relative" bind:this={userMenu} {onfocuscapture} {onblurcapture}>
-	<button onclick={toggleLogoutButton} tabindex="0">
+<div class="flex items-center relative" onclick={stopPropagation} role="none">
+	<button tabindex="0" onclick={toggleMenu} onkeydown={toggleMenu}>
 		{#if avatarUrl}
 			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
 		{:else}
