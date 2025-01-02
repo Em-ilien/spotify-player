@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Player from '$lib/components/project/Player.svelte';
-	import SearchBarre from '$lib/components/project/SearchBarre.svelte';
+	import SearchBar from '$lib/components/project/SearchBar.svelte';
 
 	import Audiotheque from '$lib/components/project/Audiotheque.svelte';
 	import Footer from '$lib/components/project/Footer.svelte';
@@ -10,7 +10,7 @@
 
 <div class="flex flex-col h-screen overflow-hidden">
 	<div class="flex flex-col h-full overflow-y-scroll">
-		<SearchBarre {accessToken} />
+		<SearchBar {accessToken} />
 
 		<div class="z-2 h-full flex flex-col">
 			<Audiotheque {accessToken}>
