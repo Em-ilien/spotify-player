@@ -38,9 +38,22 @@
 		showUserMenu = !showUserMenu;
 	}
 
+	let userMenu: HTMLElement;
+
 	function handleClickOutside(event: MouseEvent) {
-		const userMenu = document.querySelector('.relative');
 		if (userMenu && !userMenu.contains(event.target as Node)) {
+			showUserMenu = false;
+		}
+	}
+
+	function onfocuscapture(event: FocusEvent) {
+		if (userMenu && !userMenu.contains(event.relatedTarget as Node)) {
+			showUserMenu = true;
+		}
+	}
+
+	function onblurcapture(event: FocusEvent) {
+		if (userMenu && !userMenu.contains(event.relatedTarget as Node)) {
 			showUserMenu = false;
 		}
 	}
@@ -48,7 +61,7 @@
 
 <svelte:window onclick={handleClickOutside} />
 
-<div class="flex items-center relative">
+<div class="flex items-center relative" bind:this={userMenu} {onfocuscapture} {onblurcapture}>
 	<button onclick={toggleLogoutButton} tabindex="0">
 		{#if avatarUrl}
 			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
