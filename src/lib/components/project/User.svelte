@@ -2,6 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
+	import Menu from './Menu.svelte';
 
 	interface Props {
 		accessToken: string;
@@ -32,55 +33,21 @@
 			window.location.href = '/';
 		});
 	}
-
-	let menu: HTMLElement;
-	let showMenu = $state(false);
-
-	function toggleMenu(event: KeyboardEvent | MouseEvent) {
-		if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
-
-		showMenu = !showMenu;
-		event.preventDefault();
-		event.stopPropagation();
-	}
-
-	function handleClose(event: MouseEvent | KeyboardEvent) {
-		if (!showMenu) return;
-
-		if (event instanceof KeyboardEvent && event.key !== 'Escape') return;
-
-		if (
-			event instanceof MouseEvent &&
-			event.target instanceof HTMLElement &&
-			menu.contains(event.target)
-		)
-			return;
-
-		showMenu = false;
-	}
-
-	function stopPropagation(event: MouseEvent) {
-		event.stopPropagation();
-	}
 </script>
 
-<svelte:body onclick={handleClose} onkeydown={handleClose} />
-
-<div class="flex items-center relative" bind:this={menu}>
-	<div onclick={stopPropagation} role="none">
-		<button tabindex="0" onclick={toggleMenu} onkeydown={toggleMenu}>
-			{#if avatarUrl}
-				<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
-			{:else}
-				<span
-					class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-9 h-9 flex items-center justify-center"
-				>
-					{userName.charAt(0).toUpperCase()}
-				</span>
-			{/if}
-		</button>
-	</div>
-	{#if showMenu}
+<Menu>
+	{#snippet button()}
+		{#if avatarUrl}
+			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
+		{:else}
+			<span
+				class="rounded-full bg-gray-500 text-white font-bold py-2 px-4 w-9 h-9 flex items-center justify-center"
+			>
+				{userName.charAt(0).toUpperCase()}
+			</span>
+		{/if}
+	{/snippet}
+	{#snippet menu()}
 		<div
 			class="absolute top-full right-0 mt-3 py-4 px-2 bg-white border border-gray-300 rounded shadow-lg"
 		>
@@ -97,5 +64,5 @@
 				<span class="ml-3 text-gray-700 text-sm">Logout</span>
 			</button>
 		</div>
-	{/if}
-</div>
+	{/snippet}
+</Menu>
