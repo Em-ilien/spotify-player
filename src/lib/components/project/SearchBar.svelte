@@ -186,7 +186,7 @@
 	{/if}
 
 	<div
-		class="flex items-center border rounded flex-grow cursor-text"
+		class="flex items-center border rounded flex-grow cursor-text focus-within:outline focus-within:outline-orange-500 focus-within:outline-1"
 		onclick={focusInput}
 		onkeydown={handleKeydownWindow}
 		onfocus={focusInput}
