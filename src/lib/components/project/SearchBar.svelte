@@ -180,6 +180,7 @@
 			in:scale={{ duration: 300 }}
 			out:scale={{ duration: 300 }}
 			onclick={stopSearch}
+			tabindex="0"
 		>
 			<FontAwesomeIcon icon={faTimesSquare} class="text-gray-400 cursor-pointer size-6 ml-[-3px]" />
 		</button>
@@ -187,11 +188,10 @@
 
 	<div
 		class="flex items-center border rounded flex-grow cursor-text focus-within:outline focus-within:outline-orange-500 focus-within:outline-1"
-		onclick={focusInput}
 		onkeydown={handleKeydownWindow}
 		onfocus={focusInput}
 		role="button"
-		tabindex="0"
+		tabindex="-1"
 	>
 		<FontAwesomeIcon
 			icon={faSearch}
@@ -202,7 +202,7 @@
 			type="text"
 			placeholder="/  Search for @tracks, @playlists, @albums, @artists..."
 			class="outline-none w-full p-2 text-sm"
-			tabindex="-1"
+			tabindex="0"
 			bind:this={searchInput}
 			bind:value={searchQuery}
 			{onkeydown}
