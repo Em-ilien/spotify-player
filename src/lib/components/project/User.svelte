@@ -48,8 +48,8 @@
 
 <svelte:window onclick={handleClickOutside} />
 
-<div class="flex items-center relative" tabindex="0" role="button">
-	<button onclick={toggleLogoutButton}>
+<div class="flex items-center relative">
+	<button onclick={toggleLogoutButton} tabindex="0">
 		{#if avatarUrl}
 			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
 		{:else}
