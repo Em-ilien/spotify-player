@@ -141,7 +141,7 @@
 		switch (event.key) {
 			case 'Escape':
 				stopSearch();
-				document.querySelector('input')?.blur();
+				searchInput?.blur();
 				break;
 			case 'ArrowDown':
 				selectedResult = Math.min(selectedResult + 1, searchResults.length - 1);
@@ -157,11 +157,17 @@
 		}
 	}
 
+	let searchInput: HTMLInputElement;
+
 	function handleKeydownWindow(event: KeyboardEvent) {
 		if (event.key === '/') {
 			event.preventDefault();
-			document.querySelector('input')?.focus();
+			searchInput?.focus();
 		}
+	}
+
+	function focusInput() {
+		searchInput?.focus();
 	}
 </script>
 
@@ -179,17 +185,26 @@
 		</button>
 	{/if}
 
-	<div class="flex items-center border rounded flex-grow cursor-text">
+	<div
+		class="flex items-center border rounded flex-grow cursor-text"
+		onclick={focusInput}
+		onkeydown={handleKeydownWindow}
+		onfocus={focusInput}
+		role="button"
+		tabindex="0"
+	>
 		<FontAwesomeIcon
 			icon={faSearch}
-			class="text-gray-300 text-sm absolute ml-2"
+			class="text-gray-300 text-sm ml-2"
 			style={'witdh: 14px; height:14px;'}
 		/>
 		<input
 			type="text"
 			placeholder="/  Search for @tracks, @playlists, @albums, @artists..."
+			class="outline-none w-full p-2 text-sm"
+			tabindex="-1"
+			bind:this={searchInput}
 			bind:value={searchQuery}
-			class="outline-none w-full p-2 pl-8 text-sm"
 			{onkeydown}
 		/>
 	</div>
