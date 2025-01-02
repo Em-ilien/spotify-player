@@ -179,7 +179,13 @@
 		</button>
 	{/if}
 
-	<div class="flex items-center border rounded p-2 flex-grow">
+	<div
+		class="flex items-center border rounded p-2 flex-grow cursor-text"
+		role="button"
+		tabindex="0"
+		onclick={() => document.querySelector('input')?.focus()}
+		onkeydown={(event) => event.key === 'Enter' && document.querySelector('input')?.focus()}
+	>
 		<FontAwesomeIcon
 			icon={faSearch}
 			class="text-gray-300 text-sm"
