@@ -179,23 +179,17 @@
 		</button>
 	{/if}
 
-	<div
-		class="flex items-center border rounded p-2 flex-grow cursor-text"
-		role="button"
-		tabindex="0"
-		onclick={() => document.querySelector('input')?.focus()}
-		onkeydown={(event) => event.key === 'Enter' && document.querySelector('input')?.focus()}
-	>
+	<div class="flex items-center border rounded flex-grow cursor-text">
 		<FontAwesomeIcon
 			icon={faSearch}
-			class="text-gray-300 text-sm"
+			class="text-gray-300 text-sm absolute ml-2"
 			style={'witdh: 14px; height:14px;'}
 		/>
 		<input
 			type="text"
 			placeholder="/  Search for @tracks, @playlists, @albums, @artists..."
 			bind:value={searchQuery}
-			class="outline-none w-full ml-2 text-sm"
+			class="outline-none w-full p-2 pl-8 text-sm"
 			{onkeydown}
 		/>
 	</div>
