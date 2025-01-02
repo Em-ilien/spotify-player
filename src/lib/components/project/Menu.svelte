@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { button, menu } = $props();
+	let { button, menu, onMenuOpened } = $props();
 
 	let menuElement: HTMLElement;
 	let showMenu = $state(false);
@@ -10,6 +10,8 @@
 		showMenu = !showMenu;
 		event.preventDefault();
 		event.stopPropagation();
+
+		if (showMenu && onMenuOpened) onMenuOpened();
 	}
 
 	function handleClose(event: MouseEvent | KeyboardEvent) {
