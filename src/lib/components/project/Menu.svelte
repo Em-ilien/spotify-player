@@ -1,5 +1,23 @@
 <script lang="ts">
-	let { button, menu, onMenuOpened } = $props();
+	let {
+		button,
+		menu,
+		onMenuOpened,
+		position
+	}: {
+		button: () => any;
+		menu: () => any;
+		onMenuOpened?: () => any;
+		position: { x: 'left' | 'right' | 'center'; y: 'top' | 'bottom' };
+	} = $props();
+
+	const positionX =
+		position.x === 'left'
+			? 'right-0'
+			: position.x === 'right'
+				? 'left-0'
+				: 'w-max translate-x-1/2 right-1/2 transform';
+	const positionY = position.y === 'bottom' ? 'top-full ' : ' bottom-full';
 
 	let menuElement: HTMLElement;
 	let showMenu = $state(false);
@@ -43,6 +61,10 @@
 		</button>
 	</div>
 	{#if showMenu}
-		{@render menu()}
+		<div
+			class="{positionX} {positionY} absolute mt-3 py-4 px-2 bg-white border border-gray-300 rounded shadow-lg"
+		>
+			{@render menu()}
+		</div>
 	{/if}
 </div>

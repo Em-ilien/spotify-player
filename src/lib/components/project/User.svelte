@@ -35,7 +35,7 @@
 	}
 </script>
 
-<Menu>
+<Menu position={{ x: 'left', y: 'bottom' }}>
 	{#snippet button()}
 		{#if avatarUrl}
 			<img src={avatarUrl} alt="Spotify Avatar" class="w-9 h-9 rounded-full cursor-pointer" />
@@ -48,21 +48,17 @@
 		{/if}
 	{/snippet}
 	{#snippet menu()}
-		<div
-			class="absolute top-full right-0 mt-3 py-4 px-2 bg-white border border-gray-300 rounded shadow-lg"
-		>
-			<div class="pb-3 px-4">
-				<span class="block text-gray-700">{userName}</span>
-				<span class="block text-gray-400 text-sm">{userEmailAddress}</span>
-			</div>
-
-			<button
-				onclick={logout}
-				class="flex items-center w-full hover:bg-gray-100 px-4 py-3 rounded-lg"
-			>
-				<FontAwesomeIcon icon={faSignOut} class="text-gray-700 text-sm" />
-				<span class="ml-3 text-gray-700 text-sm">Logout</span>
-			</button>
+		<div class="pb-3 px-4">
+			<span class="block text-gray-700">{userName}</span>
+			<span class="block text-gray-400 text-sm">{userEmailAddress}</span>
 		</div>
+
+		<button
+			onclick={logout}
+			class="flex items-center w-full hover:bg-gray-100 px-4 py-3 rounded-lg"
+		>
+			<FontAwesomeIcon icon={faSignOut} class="text-gray-700 text-sm" />
+			<span class="ml-3 text-gray-700 text-sm">Logout</span>
+		</button>
 	{/snippet}
 </Menu>
