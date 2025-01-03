@@ -13,6 +13,7 @@ interface Player {
 export const playerState = $state({
 	player: undefined as Player,
 	state: {} as any,
+	devices: [] as { id: string; name: string }[],
 	setPlayer: (p: Player) => {
 		playerState.player = p;
 		changePlayer();

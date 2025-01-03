@@ -8,7 +8,7 @@
 
 	let spotifyConnectDevices = $state([]);
 
-	async function onMenuOpened() {
+	async function fetchDevices() {
 		const res = await fetch('https://api.spotify.com/v1/me/player/devices', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
@@ -18,7 +18,7 @@
 		});
 		const data = await res.json();
 
-		spotifyConnectDevices = data.devices;
+		playerState.devices = data.devices;
 	}
 
 	function connectToDevice(deviceId: string) {
@@ -27,7 +27,7 @@
 </script>
 
 <div class="flex space-x-2 ml-4" title="Spotify Connect (change device)">
-	<Menu position={{ x: 'center', y: 'top' }} {onMenuOpened}>
+	<Menu position={{ x: 'center', y: 'top' }} onMenuOpened={fetchDevices}>
 		{#snippet button()}
 			<span class="text-gray-500 cursor-pointer"
 				><FontAwesomeIcon icon={faHeadphones} style={'width: 20px; height: 16px'} /></span
@@ -36,7 +36,7 @@
 		{#snippet menu()}
 			<div class="pb-3 px-4">
 				<span class="block text-gray-700 p-2 pb-4">Appareils</span>
-				{#each spotifyConnectDevices as device}
+				{#each playerState.devices as device}
 					<button
 						onclick={connectToDevice(device.id)}
 						class="flex items-center hover:bg-gray-100 rounded-lg px-2 py-1 w-full"
