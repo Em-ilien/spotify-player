@@ -2,6 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { tracksStore } from '$lib/stores/tracksStore';
+	import { playerState } from '$lib/player.svelte';
 
 	interface Props {
 		accessToken?: string | undefined | null;
@@ -11,15 +12,13 @@
 
 	let tracks = $derived($tracksStore);
 
-	async function playTrack(trackUri: string) {
-		await fetch('https://api.spotify.com/v1/me/player/play', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json'
-			},
+	function playTrack(trackUri: string) {
+		fetch('/api/play', {
 			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				uris: [trackUri]
+				uris: [trackUri],
+				currentDeviceId: playerState.devices.find((device) => device?.is_this_device)?.id
 			})
 		});
 	}

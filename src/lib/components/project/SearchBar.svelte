@@ -6,6 +6,7 @@
 	import { scale } from 'svelte/transition';
 
 	import User from './User.svelte';
+	import { playerState } from '$lib/player.svelte';
 
 	interface Props {
 		accessToken: string;
@@ -122,16 +123,15 @@
 		else stopSearch();
 	});
 
-	async function playItem(itemUri: string) {
-		await fetch('https://api.spotify.com/v1/me/player/play', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json'
-			},
+	function playItem(itemUri: string) {
+		fetch('/api/play', {
 			method: 'PUT',
-			body: JSON.stringify(
-				itemUri.includes('spotify:track:') ? { uris: [itemUri] } : { context_uri: itemUri }
-			)
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				uris: itemUri.includes('spotify:track:') ? [itemUri] : null,
+				context_uri: itemUri.includes('spotify:track:') ? null : itemUri,
+				currentDeviceId: playerState.devices.find((device) => device?.is_this_device)?.id
+			})
 		});
 	}
 

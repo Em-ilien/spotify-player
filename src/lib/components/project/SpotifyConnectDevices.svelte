@@ -23,10 +23,6 @@
 
 		playerState.devices = data.devices;
 	}
-
-	function connectToDevice(deviceId: string) {
-		playerState.connectToDevice(deviceId);
-	}
 </script>
 
 <div class="flex space-x-2 ml-4" title="Spotify Connect (change device)">
@@ -41,7 +37,7 @@
 				<span class="block text-gray-700 p-2 pb-4">Appareils</span>
 				{#each playerState.devices as device}
 					<button
-						onclick={connectToDevice(device.id)}
+						onclick={() => playerState.activeDevice(device.id)}
 						class="flex items-center hover:bg-gray-100 rounded-lg px-2 py-1 w-full"
 					>
 						<span class="text-gray-700 text-sm">{device.name}</span>

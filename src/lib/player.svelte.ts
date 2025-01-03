@@ -13,7 +13,7 @@ interface Player {
 export const playerState = $state({
 	player: undefined as Player,
 	state: {} as any,
-	devices: [] as { id: string; name: string }[],
+	devices: [] as { id: string; name: string; is_this_device: boolean }[],
 	setPlayer: (p: Player) => {
 		playerState.player = p;
 		changePlayer();
@@ -38,7 +38,7 @@ export const playerState = $state({
 
 		await playerState.player.disconnect();
 	},
-	connectToDevice: async (deviceId: string) => {
+	activeDevice: async (deviceId: string) => {
 		const res = await fetch('/api/player', {
 			method: 'PUT',
 			headers: {
@@ -46,8 +46,6 @@ export const playerState = $state({
 			},
 			body: JSON.stringify({ device_id: deviceId })
 		});
-
-		console.log('Player connected to Spotify', res);
 
 		const s = await playerState.player.getCurrentState();
 		playerState.state = s;
@@ -62,7 +60,11 @@ const changePlayer = () => {
 	playerState.player.addListener('ready', ({ device_id }: { device_id: string }) => {
 		console.log('Ready with Device ID', device_id);
 
-		playerState.devices.push({ name: 'Simplayer Spotify Player', id: device_id });
+		playerState.devices.push({
+			name: 'Simplayer Spotify Player',
+			id: device_id,
+			is_this_device: true
+		});
 	});
 	playerState.player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
 		console.log('Device ID has gone offline', device_id);

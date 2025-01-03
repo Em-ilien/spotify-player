@@ -2,6 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { artistsStore } from '$lib/stores/artistsStore';
+	import { playerState } from '$lib/player.svelte';
 
 	interface Props {
 		accessToken?: string | undefined | null;
@@ -11,15 +12,13 @@
 
 	let artists = $derived($artistsStore);
 
-	async function playArtist(artistUri: string) {
-		fetch('https://api.spotify.com/v1/me/player/play', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json'
-			},
+	function playArtist(artistUri: string) {
+		fetch('/api/play', {
 			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				context_uri: `spotify:artist:${artistUri}`
+				context_uri: `spotify:artist:${artistUri}`,
+				currentDeviceId: playerState.devices.find((device) => device?.is_this_device)?.id
 			})
 		});
 	}

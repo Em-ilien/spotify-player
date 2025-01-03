@@ -2,6 +2,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faPlay } from '@fortawesome/free-solid-svg-icons';
 	import { playlistsStore } from '$lib/stores/playlistsStore';
+	import { playerState } from '$lib/player.svelte';
 
 	interface Props {
 		accessToken?: string | undefined | null;
@@ -11,15 +12,13 @@
 
 	let notNullPlaylists = $derived($playlistsStore?.filter((playlist) => playlist !== null));
 
-	async function playPlaylist(playlistUri: string) {
-		fetch('https://api.spotify.com/v1/me/player/play', {
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				'Content-Type': 'application/json'
-			},
+	function playPlaylist(playlistUri: string) {
+		fetch('/api/play', {
 			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				context_uri: `spotify:playlist:${playlistUri}`
+				context_uri: `spotify:playlist:${playlistUri}`,
+				currentDeviceId: playerState.devices.find((device) => device?.is_this_device)?.id
 			})
 		});
 	}
