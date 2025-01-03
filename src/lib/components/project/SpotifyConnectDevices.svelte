@@ -5,7 +5,7 @@
 	import Menu from './Menu.svelte';
 	import { onMount } from 'svelte';
 
-	let { accessToken }: { accessToken?: string } = $props();
+	let { accessToken }: { accessToken: string } = $props();
 
 	onMount(() => {
 		fetchDevices();

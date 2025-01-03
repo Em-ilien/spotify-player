@@ -8,11 +8,7 @@
 	import User from './User.svelte';
 	import { playerState } from '$lib/player.svelte';
 
-	interface Props {
-		accessToken: string;
-	}
-
-	let { accessToken }: Props = $props();
+	let { accessToken }: { accessToken: string } = $props();
 
 	let searchResults: any[] = $state([]);
 	let searchQuery = $state('');
@@ -48,7 +44,11 @@
 			if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 			const data = await response.json();
 
-			const calculateScore = (item) => {
+			const calculateScore = (item: {
+				name: string;
+				artists: { name: string }[];
+				popularity: number;
+			}) => {
 				const name = item.name.toLowerCase();
 				const artists = item?.artists?.map((artist) => artist.name.toLowerCase()).join(' ') || '';
 				const popularity = item.popularity || 0;
@@ -68,7 +68,7 @@
 
 			const tracks = data.tracks?.items;
 			const albums = data.albums?.items;
-			const playlists = data.playlists?.items.filter((item) => item !== null);
+			const playlists = data.playlists?.items.filter((item: {}) => item !== null);
 			const artists = data.artists?.items;
 
 			searchResults = [];

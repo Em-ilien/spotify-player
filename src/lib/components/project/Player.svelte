@@ -11,17 +11,13 @@
 	import { onDestroy, onMount } from 'svelte';
 	import SpotifyConnectDevices from './SpotifyConnectDevices.svelte';
 
-	interface Props {
-		accessToken?: string;
-	}
-
-	let { accessToken = undefined }: Props = $props();
+	let { accessToken }: { accessToken: string } = $props();
 
 	let isPaused = $derived(playerState?.state?.paused);
 
 	let playingTrack = $derived(playerState?.state?.track_window?.current_track);
 	let playingTitle = $derived(playingTrack?.name);
-	let playingArtists = $derived(playingTrack?.artists.map((a) => a.name));
+	let playingArtists = $derived(playingTrack?.artists.map((a: { name: boolean }) => a.name));
 	let duration_ms = $derived(playingTrack?.duration_ms);
 
 	let progress_ms = $state(playerState?.state?.position);
@@ -37,7 +33,7 @@
 
 	function changeProgress(event: Event) {
 		const target = event.target as HTMLInputElement;
-		playerState.seek(target.value);
+		playerState.seek(parseInt(target.value));
 	}
 
 	let trackDurationRatioPercent = $derived((progress_ms / duration_ms) * 100);
@@ -56,7 +52,7 @@
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			let p = new Spotify.Player({
 				name: 'Simplayer Spotify Player',
-				getOAuthToken: (cb) => {
+				getOAuthToken: (cb: (accessToken: string) => void) => {
 					cb(accessToken);
 				},
 				volume: 0.5

@@ -4,11 +4,7 @@
 	import { onMount } from 'svelte';
 	import Menu from './Menu.svelte';
 
-	interface Props {
-		accessToken: string;
-	}
-
-	let { accessToken }: Props = $props();
+	let { accessToken }: { accessToken: string } = $props();
 
 	let avatarUrl = $state('');
 	let userName = $state('');
