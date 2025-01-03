@@ -4,12 +4,6 @@
 	import { artistsStore } from '$lib/stores/artistsStore';
 	import { playerState } from '$lib/player.svelte';
 
-	interface Props {
-		accessToken?: string | undefined | null;
-	}
-
-	let { accessToken = undefined }: Props = $props();
-
 	let artists = $derived($artistsStore);
 
 	function playArtist(artistUri: string) {

@@ -4,12 +4,6 @@
 	import { tracksStore } from '$lib/stores/tracksStore';
 	import { playerState } from '$lib/player.svelte';
 
-	interface Props {
-		accessToken?: string | undefined | null;
-	}
-
-	let { accessToken = undefined }: Props = $props();
-
 	let tracks = $derived($tracksStore);
 
 	function playTrack(trackUri: string) {

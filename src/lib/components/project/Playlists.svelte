@@ -4,12 +4,6 @@
 	import { playlistsStore } from '$lib/stores/playlistsStore';
 	import { playerState } from '$lib/player.svelte';
 
-	interface Props {
-		accessToken?: string | undefined | null;
-	}
-
-	let { accessToken = undefined }: Props = $props();
-
 	let notNullPlaylists = $derived($playlistsStore?.filter((playlist) => playlist !== null));
 
 	function playPlaylist(playlistUri: string) {

@@ -59,7 +59,7 @@
 <div class="h-full flex flex-col justify-between">
 	{#each tabs as tab}
 		{#if tab.active}
-			<tab.component {accessToken} />
+			<tab.component />
 		{/if}
 	{/each}
 
