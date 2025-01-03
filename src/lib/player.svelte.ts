@@ -61,6 +61,8 @@ export const playerState = $state({
 const changePlayer = () => {
 	playerState.player.addListener('ready', ({ device_id }: { device_id: string }) => {
 		console.log('Ready with Device ID', device_id);
+
+		playerState.devices.push({ name: 'Simplayer Spotify Player', id: device_id });
 	});
 	playerState.player.addListener('not_ready', ({ device_id }: { device_id: string }) => {
 		console.log('Device ID has gone offline', device_id);

@@ -3,10 +3,13 @@
 	import { faHeadphones } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import Menu from './Menu.svelte';
+	import { onMount } from 'svelte';
 
 	let { accessToken }: { accessToken?: string } = $props();
 
-	let spotifyConnectDevices = $state([]);
+	onMount(() => {
+		fetchDevices();
+	});
 
 	async function fetchDevices() {
 		const res = await fetch('https://api.spotify.com/v1/me/player/devices', {
