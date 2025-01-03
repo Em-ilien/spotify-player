@@ -4,7 +4,7 @@
 	import Playlists from '$lib/components/project/Playlists.svelte';
 	import Tracks from '$lib/components/project/Tracks.svelte';
 
-	let { accessToken, footer }: { accessToken: string; footer: () => any } = $props();
+	let { footer }: { footer: () => any } = $props();
 
 	const tabs = $state([
 		{ active: true, name: 'Playlists', component: Playlists },

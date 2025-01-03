@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="z-2 h-full flex flex-col">
-			<Audiotheque {accessToken}>
+			<Audiotheque>
 				{#snippet footer()}
 					<Footer />
 				{/snippet}
